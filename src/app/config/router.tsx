@@ -8,12 +8,18 @@ import { ProfileLayout } from '@src/widgets/profile-layout';
 import { Support } from 'pages/support';
 import { ProfileSettings } from 'pages/profile-settings';
 import { Orders } from 'pages/orders';
+import { About } from 'pages/about';
+import { Home } from 'pages/home';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
+      {
+        index: true,
+        element: <Home />,
+      },
       {
         path: '/profile',
         element: <ProfileLayout />,
@@ -31,6 +37,10 @@ export const router = createBrowserRouter([
             element: <Support />,
           },
         ],
+      },
+      {
+        path: '/about',
+        element: <About />,
       },
     ],
   },

@@ -19,7 +19,7 @@ export const DirectionsMenu = () => {
           <KeyboardArrowDownIcon />
         </div>
       </Menu.Button>
-      <MenuItems items={links} className='origin-to-left absolute left-0 ' />
+      <MenuItems items={links} className='origin-to-left absolute left-0' />
     </Menu>
   );
 };

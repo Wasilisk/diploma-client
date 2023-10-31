@@ -1,0 +1,23 @@
+import { Button } from '@src/shared/ui/button';
+import { DirectionSelect } from 'features/main-search/direction-select';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { DateSelector } from 'features/main-search/date-selector';
+
+export const MainSearch = () => {
+  return (
+    <div className='flex w-full max-w-screen-md flex-col items-center justify-between gap-4 rounded-2xl bg-white px-4 py-3 shadow sm:flex-row sm:gap-8 sm:rounded-full'>
+      <div className='flex w-full flex-col items-center justify-between gap-4 divide-gray-200 sm:flex-row sm:gap-8'>
+        <DirectionSelect />
+        <DateSelector />
+      </div>
+      <Button
+        variant='primary'
+        rounded
+        className='flex w-full items-center justify-center sm:w-auto'
+      >
+        <SearchOutlinedIcon />
+        Знайти
+      </Button>
+    </div>
+  );
+};

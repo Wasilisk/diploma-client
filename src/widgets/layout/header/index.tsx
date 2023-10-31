@@ -18,7 +18,7 @@ export const Header = () => {
           <div className='hidden md:flex'>
             <DirectionsMenu />
             <nav className='inline-flex items-center justify-start md:ml-4 md:gap-2 lg:ml-9 lg:gap-14'>
-              <Link to='/to' className='decoration-solid underline-offset-2 hover:underline'>
+              <Link to='/about' className='decoration-solid underline-offset-2 hover:underline'>
                 Про сервіс
               </Link>
               <Link to='/to' className='decoration-solid underline-offset-2 hover:underline'>
