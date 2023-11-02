@@ -6,4 +6,8 @@ export const endpoints = {
     verifyCaptcha: 'auth/captcha/verify-token',
   },
   directions: 'directions',
+  account: {
+    profile: '/account/profile',
+  },
+  supportMessage: '/support-message',
 };

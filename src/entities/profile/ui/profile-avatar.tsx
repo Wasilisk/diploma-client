@@ -1,5 +1,5 @@
 type ProfileAvatar = {
-  src: string | null;
+  src?: string;
   username: string;
 };
 export const ProfileAvatar = ({ src, username }: ProfileAvatar) => {

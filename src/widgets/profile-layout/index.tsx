@@ -1,22 +1,33 @@
 import { Tab } from '@headlessui/react';
-import { Fragment } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+
+const tabs = [
+  {
+    index: 0,
+    label: 'Мої замовлення',
+    to: '/profile/orders',
+  },
+  {
+    index: 1,
+    label: 'Налаштування профілю',
+    to: '/profile/account-settings',
+  },
+  {
+    index: 2,
+    label: 'Написати в підтримку',
+    to: '/profile/support',
+  },
+];
 
 export const ProfileLayout = () => {
-  const tabs = [
-    {
-      label: 'Мої замовлення',
-      to: 'profile/orders',
-    },
-    {
-      label: 'Налаштування профілю',
-      to: 'profile/settings',
-    },
-    {
-      label: 'Написати в підтримку',
-      to: 'profile/support',
-    },
-  ];
+  const location = useLocation();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    const currentTabIndex = tabs.find((tab) => tab.to === location.pathname)?.index || 0;
+    setSelectedIndex(currentTabIndex);
+  }, [location.pathname]);
 
   const handleScroll = (event: any) => {
     const container = event.target;
@@ -30,7 +41,7 @@ export const ProfileLayout = () => {
 
   return (
     <>
-      <Tab.Group>
+      <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List
           onWheel={handleScroll}
           className='no-scrollbar mt-4 flex gap-x-5 overflow-x-scroll border-b border-gray-200 md:mt-10 md:gap-x-10'

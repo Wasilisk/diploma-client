@@ -1,6 +1,7 @@
 import { DirectionCard } from 'entities/direction/ui/direction-card';
 import { useDirections } from 'shared/utils/hooks/use-directions';
 import { Button } from 'shared/ui/button';
+import { DirectionCardSkeleton } from 'entities/direction/ui/direction-card-skeleton';
 
 export const PopularDirections = () => {
   const { data: directions } = useDirections();
@@ -12,18 +13,20 @@ export const PopularDirections = () => {
         Проводимо індивідуальні та групові екскурсії українською та англійськими мовами
       </p>
       <div className='grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8'>
-        {directions?.map((direction) => (
-          <DirectionCard
-            key={direction.id}
-            name={direction.name}
-            image={direction.image}
-            action={
-              <Button rounded className='px-2 py-1 md:px-2 md:py-1' variant='primary'>
-                15 екскурсій
-              </Button>
-            }
-          />
-        ))}
+        {directions
+          ? directions.slice(0, 6).map((direction) => (
+              <DirectionCard
+                key={direction.id}
+                name={direction.name}
+                image={direction.image}
+                action={
+                  <Button rounded className='px-2 py-1 md:px-2 md:py-1' variant='primary'>
+                    15 екскурсій
+                  </Button>
+                }
+              />
+            ))
+          : Array.from({ length: 6 }).map((_, index) => <DirectionCardSkeleton key={index} />)}
       </div>
     </div>
   );

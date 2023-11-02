@@ -28,7 +28,10 @@ export const DirectionsMenu = () => {
         </div>
       </Menu.Button>
       {linkDirections && (
-        <MenuItems items={linkDirections} className='origin-to-left absolute left-0 w-full' />
+        <MenuItems
+          items={linkDirections}
+          className='origin-to-left no-scrollbar absolute left-0 max-h-56 w-full overflow-auto'
+        />
       )}
     </Menu>
   );

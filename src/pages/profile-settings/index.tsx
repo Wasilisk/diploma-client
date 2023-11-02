@@ -1,27 +1,30 @@
+import { useUserProfile } from 'shared/utils/hooks/use-user-profile';
+
 export const ProfileSettings = () => {
+  const { data } = useUserProfile();
   const fields = [
     {
       label: "Ім'я",
-      value: 'Василь',
+      value: data?.profile.firstName,
     },
     {
       label: 'Прізвище',
-      value: 'Петрина',
+      value: data?.profile.lastName,
     },
     {
       label: 'Електрона пошта',
-      value: 'vasyl.petryna@gmail.com',
+      value: data?.email,
     },
     {
       label: 'Номер телефону',
-      value: '+ 380 741 32 413',
+      value: data?.phone,
     },
   ];
   return (
     <div className='flex flex-col gap-x-14 gap-y-5 md:flex-row'>
       <img
         className='aspect-square w-full rounded-2xl object-cover md:w-96'
-        src='https://www.thestatesman.com/wp-content/uploads/2021/10/f3739843f5001109ed90e7c05b34fb5f.jpg'
+        src={data?.profile.profilePicture}
         alt='Profile avatar'
       />
       <div className='w-full'>

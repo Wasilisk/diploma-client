@@ -6,9 +6,10 @@ import { IconButton } from 'shared/ui/icon-button';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from 'shared/ui/button';
 import { UserProfileMenu } from 'features/header/user-profile-menu';
+import { useAuth } from 'shared/utils/hooks/use-auth';
 
 export const Header = () => {
-  const isAuth = false;
+  const { isAuth } = useAuth();
   return (
     <header className='flex-0 shadow'>
       <div className='container mx-auto flex justify-between px-5 py-5'>

@@ -11,8 +11,9 @@ export const OrdersFilters = () => {
 
   return (
     <div className='flex gap-x-4'>
-      {filters.map((filter) => (
+      {filters.map((filter, index) => (
         <div
+          key={index}
           className={`${
             activeFilter === filter && 'bg-yellow-400 font-semibold'
           } cursor-pointer rounded-2xl px-3 py-1`}

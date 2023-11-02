@@ -11,11 +11,15 @@ import { AuthService } from 'shared/services';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { AxiosErrorResponseData, LoginFormData } from 'shared/utils/types';
+import { useAuth } from 'shared/utils/hooks/use-auth';
 
 export const LoginForm = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const { mutate: loginUser, isLoading } = useMutation(AuthService.login, {
-    onSuccess: () => {
+    onSuccess: (response) => {
+      localStorage.setItem('token', response.data.accessToken);
+      login();
       navigate('/');
     },
     onError: (error: AxiosError<AxiosErrorResponseData>) => {

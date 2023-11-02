@@ -34,7 +34,7 @@ export const DirectionSelect = ({ direction, setDirection }: DirectionSelectProp
             onChange={(event) => setInputValue(event.target.value)}
           />
         </Combobox.Button>
-        <Combobox.Options className='no-scrollbar origin-to-left absolute left-0 top-full z-20 mt-1 inline-flex max-h-60 w-full flex-col items-start justify-start divide-y divide-gray-200 overflow-auto rounded-md bg-white px-5 py-2 text-base shadow-lg ring-1 ring-black/5 focus:outline-none'>
+        <Combobox.Options className='no-scrollbar origin-to-left absolute left-0 top-full z-20 mt-1 inline-flex max-h-56 w-full flex-col items-start justify-start divide-y divide-gray-200 overflow-auto rounded-md bg-white px-5 py-2 text-base shadow-lg ring-1 ring-black/5 focus:outline-none'>
           {filteredDirections?.length === 0 && inputValue !== '' ? (
             <div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
               Nothing found.

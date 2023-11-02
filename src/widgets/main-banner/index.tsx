@@ -12,7 +12,7 @@ export const MainBanner = () => {
         className={`absolute bottom-0 left-0 -z-10 box-border h-full w-full rounded-2xl bg-cover bg-no-repeat`}
         style={{ backgroundImage: `url(${MainBannerImage})` }}
       />
-      <h1 className='text-center text-2xl font-black leading-10 sm:text-3xl sm:leading-[3.5rem] md:text-5xl'>
+      <h1 className='text-center text-2xl font-black leading-10 sm:text-4xl sm:leading-[3.5rem] md:text-5xl'>
         Пошук і бронювання
         <br />
         екскурсій
