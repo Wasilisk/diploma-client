@@ -8,7 +8,7 @@ interface DirectionCardProps {
 export const DirectionCard = ({ image, name, action }: DirectionCardProps) => {
   return (
     <div
-      className='relative z-0 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat '
+      className='relative z-0 w-full overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat'
       style={{
         backgroundImage: `url(${image})`,
       }}

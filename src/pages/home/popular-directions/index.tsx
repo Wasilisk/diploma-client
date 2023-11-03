@@ -2,6 +2,7 @@ import { DirectionCard } from 'entities/direction/ui/direction-card';
 import { useDirections } from 'shared/utils/hooks/use-directions';
 import { Button } from 'shared/ui/button';
 import { DirectionCardSkeleton } from 'entities/direction/ui/direction-card-skeleton';
+import { Link } from 'react-router-dom';
 
 export const PopularDirections = () => {
   const { data: directions } = useDirections();
@@ -20,9 +21,11 @@ export const PopularDirections = () => {
                 name={direction.name}
                 image={direction.image}
                 action={
-                  <Button rounded className='px-2 py-1 md:px-2 md:py-1' variant='primary'>
-                    15 екскурсій
-                  </Button>
+                  <Link to={`/direction/${direction.id}`} className='w-fit'>
+                    <Button rounded className='px-2 py-1 md:px-2 md:py-1' variant='primary'>
+                      15 екскурсій
+                    </Button>
+                  </Link>
                 }
               />
             ))

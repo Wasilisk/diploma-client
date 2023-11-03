@@ -12,6 +12,7 @@ import { Home } from 'pages/home';
 import { useAuth } from 'shared/utils/hooks/use-auth';
 import { ProtectedRoute } from 'shared/ui/protected-route';
 import { ProfileLayout } from 'widgets/profile-layout';
+import { Direction } from 'pages/direction';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -28,6 +29,7 @@ export const AppRouter = () => {
               <Route path='/profile/support' element={<Support />} />
             </Route>
           </Route>
+          <Route path='/direction/:directionId' element={<Direction />} />
         </Route>
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<Login />} />
