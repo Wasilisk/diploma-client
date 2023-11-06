@@ -3,3 +3,7 @@ export * from './error.types';
 export * from './directions.types';
 export * from './account.types';
 export * from './support.types';
+export * from './tours.types';
+export * from './pagination.types';
+export * from './request.types';
+export * from './filters.types';

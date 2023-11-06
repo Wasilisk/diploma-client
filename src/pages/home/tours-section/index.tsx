@@ -1,36 +1,29 @@
 import { Button } from 'shared/ui/button';
 import { TourCard } from 'entities/tour/ui/tour-card';
 import { Link } from 'react-router-dom';
-import { DateRangeFilter } from 'shared/ui/filters/date-range-filter';
-import { SelectorFilter } from 'shared/ui/filters';
-import { useDirections } from 'shared/utils/hooks/use-directions';
-import { useState } from 'react';
+import { useTours } from 'shared/utils/hooks/use-tours';
+import { useFilters } from 'shared/utils/hooks/use-filters';
+import { Filters } from 'widgets/filters';
 
 export const ToursSection = () => {
-  const { data: directions } = useDirections();
-  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
+  const { direction } = useFilters();
+  const { data: tours } = useTours({
+    directionId: direction?.id,
+    paginationParams: { page: 0, size: 6 },
+  });
 
   return (
     <div className='my-10 md:mt-20'>
       <h6 className='text-4xl font-extrabold'>Екскурсії</h6>
-      <div className='my-4 flex flex-wrap gap-x-4 gap-y-2 border-y border-zinc-100 py-2 md:py-4'>
-        <DateRangeFilter label='Дата' />
-        <SelectorFilter
-          value={selectedDirection}
-          onChange={setSelectedDirection}
-          label='Напрямок'
-          placeholder='Усі напрямки'
-          items={directions}
-          renderItemValue={(item) => item.name}
-        />
-      </div>
+      <Filters filtersVisible={{ paymentType: false, priceRange: false, tourType: false }} />
       <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
-        {Array.from({ length: 8 }).map((_, index) => (
-          <TourCard key={index} />
-        ))}
+        {tours?.items.map((tour) => <TourCard tour={tour} key={tour.id} />)}
       </div>
       <div className='flex justify-center'>
-        <Link className='mt-8 md:mt-16' to='any'>
+        <Link
+          className='mt-8 md:mt-16'
+          to={direction?.id ? `/direction/${direction?.id}` : '/tours'}
+        >
           <Button variant='primary' rounded>
             Всі екскурсії
           </Button>

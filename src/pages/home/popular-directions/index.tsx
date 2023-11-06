@@ -23,7 +23,7 @@ export const PopularDirections = () => {
                 action={
                   <Link to={`/direction/${direction.id}`} className='w-fit'>
                     <Button rounded className='px-2 py-1 md:px-2 md:py-1' variant='primary'>
-                      15 екскурсій
+                      Екскурсій: {direction._count.tours}
                     </Button>
                   </Link>
                 }

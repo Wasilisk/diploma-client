@@ -13,6 +13,7 @@ import { useAuth } from 'shared/utils/hooks/use-auth';
 import { ProtectedRoute } from 'shared/ui/protected-route';
 import { ProfileLayout } from 'widgets/profile-layout';
 import { Direction } from 'pages/direction';
+import { Tours } from 'pages/tours';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -30,6 +31,7 @@ export const AppRouter = () => {
             </Route>
           </Route>
           <Route path='/direction/:directionId' element={<Direction />} />
+          <Route path='tours' element={<Tours />} />
         </Route>
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<Login />} />

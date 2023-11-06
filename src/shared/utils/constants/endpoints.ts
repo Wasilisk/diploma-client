@@ -6,6 +6,7 @@ export const endpoints = {
     verifyCaptcha: 'auth/captcha/verify-token',
   },
   directions: 'directions',
+  tours: 'tours',
   account: {
     profile: '/account/profile',
   },
