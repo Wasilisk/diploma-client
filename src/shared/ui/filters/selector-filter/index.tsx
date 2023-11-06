@@ -5,8 +5,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 interface SelectorFilterProps<T> {
   label: string;
-  value: string | null;
-  onChange: (value: string) => void;
+  value: T | null;
+  onChange: (value: T | null) => void;
   placeholder?: string;
   items?: T[];
   renderItemValue: (item: T) => string;
@@ -30,17 +30,25 @@ export const SelectorFilter = <T,>({
           <>
             <Listbox.Button as={FilterChip}>
               <div className='flex gap-x-2'>
-                <p>{value ? value : placeholder}</p>
+                <p>{value ? renderItemValue(value) : placeholder}</p>
                 {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </div>
             </Listbox.Button>
             <Listbox.Options className='origin-to-left no-scrollbar absolute left-0 top-full z-20 mt-2 inline-flex max-h-56 min-w-full flex-col items-start justify-start divide-y divide-gray-200 overflow-auto rounded-md bg-white px-6 py-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              {placeholder && (
+                <Listbox.Option
+                  value={null}
+                  className='w-full cursor-pointer whitespace-nowrap py-2 font-medium'
+                >
+                  {placeholder}
+                </Listbox.Option>
+              )}
               {items?.map((item, index) => {
                 const optionValue = renderItemValue(item);
                 return (
                   <Listbox.Option
                     key={index}
-                    value={optionValue}
+                    value={item}
                     className='w-full cursor-pointer whitespace-nowrap py-2 font-medium'
                   >
                     {optionValue}
