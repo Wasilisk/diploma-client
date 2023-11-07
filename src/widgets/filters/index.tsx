@@ -5,16 +5,16 @@ import { paymentTypes, prices, tourTypes } from 'shared/utils/constants';
 import { FilterTypes } from 'shared/utils/types';
 
 interface FiltersProps {
-  filtersVisible: Partial<Record<FilterTypes, boolean>>;
+  filtersVisible?: Partial<Record<FilterTypes, boolean>>;
 }
 
 export const Filters = ({
-  filtersVisible: {
-    direction = true,
-    dateRange = true,
-    priceRange = true,
-    paymentType = true,
-    tourType = true,
+  filtersVisible = {
+    direction: true,
+    dateRange: true,
+    priceRange: true,
+    paymentType: true,
+    tourType: true,
   },
 }: FiltersProps) => {
   const {
@@ -33,7 +33,7 @@ export const Filters = ({
 
   return (
     <div className='my-4 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-100 py-2 md:py-4'>
-      {direction && (
+      {filtersVisible.direction && (
         <SelectorFilter
           value={directionValue}
           onChange={setDirection}
@@ -43,10 +43,10 @@ export const Filters = ({
           renderItemValue={(item) => item.name}
         />
       )}
-      {dateRange && (
+      {filtersVisible.dateRange && (
         <DateRangeFilter label='Дата' dateRange={dateRangeValue} setDateRange={setDateRange} />
       )}
-      {priceRange && (
+      {filtersVisible.priceRange && (
         <SelectorFilter
           value={priceRangeValue}
           onChange={setPriceRange}
@@ -56,7 +56,7 @@ export const Filters = ({
           renderItemValue={(price) => price.label}
         />
       )}
-      {paymentType && (
+      {filtersVisible.paymentType && (
         <SelectorFilter
           value={paymentTypeValue}
           onChange={setPaymentType}
@@ -66,7 +66,7 @@ export const Filters = ({
           renderItemValue={(item) => item.label}
         />
       )}
-      {tourType && (
+      {filtersVisible.tourType && (
         <SelectorFilter
           value={tourTypeValue}
           onChange={setTourType}

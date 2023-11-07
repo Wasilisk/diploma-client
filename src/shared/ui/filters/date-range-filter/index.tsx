@@ -8,7 +8,6 @@ interface DateRangeFilterProps {
   setDateRange: (dateRange: DateRange) => void;
 }
 export const DateRangeFilter = ({ label, dateRange, setDateRange }: DateRangeFilterProps) => {
-  console.log(dateRange);
   return (
     <div className='flex flex-wrap items-center gap-x-3 gap-y-1'>
       <div className='font-medium leading-relaxed text-zinc-700'>{label}</div>

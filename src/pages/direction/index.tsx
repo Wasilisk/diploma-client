@@ -4,9 +4,13 @@ import { useQuery } from 'react-query';
 import { endpoints } from 'shared/utils/constants';
 import { DirectionsService } from 'shared/services';
 import { Filters } from 'widgets/filters';
+import { PageHeader } from 'shared/ui/page-header';
+import { Pagination } from 'features/pagination';
+import { useState } from 'react';
 
 export const Direction = () => {
   const { directionId } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
   const { data: directionData } = useQuery(
     `${endpoints.directions}/${directionId}`,
     async () => {
@@ -17,17 +21,33 @@ export const Direction = () => {
   );
 
   return (
-    <div className='my-10'>
-      <div className='mb-8 space-y-5'>
-        <h2 className='text-5xl font-bold leading-10 text-neutral-800'>
-          Экскурсії по напрямку: {directionData?.name}
-        </h2>
-        <p>Загальна кількість екскурсій: {directionData?._count.tours}</p>
-      </div>
-      <Filters filtersVisible={{ direction: false }} />
+    <div className='my-6 sm:my-10'>
+      <PageHeader
+        title={`Экскурсії по напрямку: ${directionData?.name}`}
+        description={`Загальна кількість екскурсій: ${directionData?._count.tours}`}
+      />
+      <Filters
+        filtersVisible={{
+          paymentType: true,
+          priceRange: true,
+          tourType: true,
+          direction: false,
+          dateRange: true,
+        }}
+      />
       <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
         {directionData?.tours.map((tour) => <TourCard key={tour.id} tour={tour} />)}
       </div>
+      {directionData?.tours && (
+        <div className='f-wull flex justify-center'>
+          <Pagination
+            onPageChange={setCurrentPage}
+            totalCount={directionData?._count.tours}
+            currentPage={currentPage}
+            pageSize={3}
+          />
+        </div>
+      )}
     </div>
   );
 };
