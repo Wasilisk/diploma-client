@@ -30,13 +30,12 @@ export const Pagination = ({
   if (currentPage === 0 && paginationRange && paginationRange.length < 2) {
     return null;
   }
-  console.log(currentPage);
+
   const onNext = () => {
     onPageChange(currentPage + 1);
   };
 
   const onPrevious = () => {
-    console.log('click');
     onPageChange(currentPage - 1);
   };
 
