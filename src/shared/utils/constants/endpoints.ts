@@ -11,4 +11,5 @@ export const endpoints = {
     profile: '/account/profile',
   },
   supportMessage: '/support-message',
+  ticketTypes: '/ticket-types',
 };

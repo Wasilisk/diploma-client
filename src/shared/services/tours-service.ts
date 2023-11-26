@@ -16,4 +16,8 @@ export class ToursService {
       },
     });
   }
+
+  static async getById(tourId: number): Promise<AxiosResponse<Tour>> {
+    return $api.get(`${endpoints.tours}/${tourId}`);
+  }
 }

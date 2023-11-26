@@ -1,24 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { TourCard } from 'entities/tour/ui/tour-card';
-import { useQuery } from 'react-query';
-import { endpoints } from 'shared/utils/constants';
-import { DirectionsService } from 'shared/services';
 import { Filters } from 'widgets/filters';
 import { PageHeader } from 'shared/ui/page-header';
 import { Pagination } from 'features/pagination';
 import { useState } from 'react';
+import { useDirectionById } from 'shared/utils/hooks/use-direction-by-id';
 
 export const Direction = () => {
   const { directionId } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: directionData } = useQuery(
-    `${endpoints.directions}/${directionId}`,
-    async () => {
-      const response = await DirectionsService.getById(Number(directionId));
-      return response.data;
-    },
-    { enabled: !!directionId },
-  );
+  const { data: directionData } = useDirectionById(Number(directionId));
 
   return (
     <div className='my-6 sm:my-10'>
