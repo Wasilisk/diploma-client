@@ -2,14 +2,17 @@ import { BurgerMenu } from 'features/header/burger-menu';
 import Logo from 'shared/assets/logo.png';
 import { DirectionsMenu } from 'features/header/directions-menu';
 import { Link } from 'react-router-dom';
-import { IconButton } from 'shared/ui/icon-button';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from 'shared/ui/button';
 import { UserProfileMenu } from 'features/header/user-profile-menu';
 import { useAuth } from 'shared/utils/hooks/use-auth';
+import { useBasket } from 'widgets/basket/use-basket';
+import { Basket } from 'widgets/basket';
 
 export const Header = () => {
   const { isAuth } = useAuth();
+  const { getTotalTicketsCount } = useBasket();
+
+  const totalTicketsCount = getTotalTicketsCount();
   return (
     <header className='flex-0 shadow'>
       <div className='container mx-auto flex justify-between px-5 py-5'>
@@ -29,7 +32,7 @@ export const Header = () => {
           </div>
         </div>
         <div className='flex items-center gap-5'>
-          <IconButton icon={<FavoriteBorderIcon />} />
+          {Boolean(totalTicketsCount) && <Basket />}
           {!isAuth ? (
             <Link to='/login'>
               <Button variant='secondary' rounded className='font-semibold'>

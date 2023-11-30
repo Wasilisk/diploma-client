@@ -7,25 +7,30 @@ import { useBooking } from 'widgets/booking-section/use-booking';
 import { useEffect, useState } from 'react';
 import { addDays, format, isEqual, startOfDay } from 'date-fns';
 import DatePicker from 'react-datepicker';
-import { TicketType } from 'shared/utils/types/ticket';
-import { TourInfo } from 'shared/utils/types';
+import { Tour } from 'shared/utils/types';
+import { useBasket } from 'widgets/basket/use-basket';
 
 const tomorrowDate = startOfDay(addDays(new Date(), 1));
 
 type BookingSectionProps = {
-  ticketTypes: TicketType[];
-  tourInfo: TourInfo;
+  tour: Tour;
 };
 
-export const BookingSection = ({ ticketTypes, tourInfo }: BookingSectionProps) => {
+export const BookingSection = ({ tour }: BookingSectionProps) => {
   const [date, setDate] = useState(tomorrowDate);
   const { tickets, calculateTotalPrice, reset, removeTicket, addTicket } = useBooking();
+  const { addToBasket } = useBasket();
 
   const tomorrowDateSelected = isEqual(date, tomorrowDate);
 
   useEffect(() => {
     return reset;
   }, []);
+
+  const onSubmit = () => {
+    addToBasket(tickets);
+    reset();
+  };
 
   return (
     <aside className='h-fit max-w-none rounded-2xl bg-neutral-100 lg:max-w-md'>
@@ -64,7 +69,7 @@ export const BookingSection = ({ ticketTypes, tourInfo }: BookingSectionProps) =
           </div>
         </div>
         <div className='divide-y divide-gray-200'>
-          {ticketTypes.map((ticketType) => (
+          {tour.ticketTypes.map((ticketType) => (
             <div key={ticketType.id} className='flex justify-between gap-x-5 py-4'>
               <div className='flex flex-1 flex-col flex-wrap items-start sm:flex-row sm:items-center sm:justify-between'>
                 <p className='whitespace-nowrap text-sm font-medium leading-relaxed text-zinc-700'>
@@ -78,7 +83,13 @@ export const BookingSection = ({ ticketTypes, tourInfo }: BookingSectionProps) =
                 <IconButton
                   className='h-9 md:h-9'
                   icon={<AddIcon />}
-                  onClick={() => addTicket({ ...ticketType, date: new Date() })}
+                  onClick={() =>
+                    addTicket({
+                      ...ticketType,
+                      date: new Date(),
+                      tour: { name: tour.name, id: tour.id, image: tour.gallery[0] },
+                    })
+                  }
                 />
                 {tickets[ticketType.id]?.count || 0}
                 <IconButton
@@ -97,22 +108,28 @@ export const BookingSection = ({ ticketTypes, tourInfo }: BookingSectionProps) =
             </p>
           </div>
         </div>
-        <Button variant='primary' rounded fullWidth disabled={Object.values(tickets).length === 0}>
+        <Button
+          variant='primary'
+          rounded
+          fullWidth
+          disabled={Object.values(tickets).length === 0}
+          onClick={onSubmit}
+        >
           Додати до замовлення
         </Button>
       </div>
       <div className='flex flex-col gap-y-4 p-8'>
         <div className='flex flex-col justify-between gap-x-4 sm:flex-row'>
           <p className='text-sm font-bold leading-relaxed text-zinc-700'>Місце зустрічі:</p>
-          <p className='text-sm leading-normal text-zinc-700'>{tourInfo.meetingPlace}</p>
+          <p className='text-sm leading-normal text-zinc-700'>{tour.tourInfo.meetingPlace}</p>
         </div>
         <div className='flex flex-col justify-between gap-x-4 sm:flex-row'>
           <p className='text-sm font-bold leading-relaxed text-zinc-700'>Місце закінчення:</p>
-          <p className='text-sm leading-normal text-zinc-700'> {tourInfo.endingPlace}</p>
+          <p className='text-sm leading-normal text-zinc-700'> {tour.tourInfo.endingPlace}</p>
         </div>
         <div className='flex flex-col justify-between gap-x-4 sm:flex-row'>
           <p className='text-sm font-bold leading-relaxed text-zinc-700'>Тривалість:</p>
-          <p className='text-sm leading-normal text-zinc-700'>{tourInfo.duration}</p>
+          <p className='text-sm leading-normal text-zinc-700'>{tour.tourInfo.duration}</p>
         </div>
       </div>
     </aside>

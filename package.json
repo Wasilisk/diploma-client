@@ -13,6 +13,8 @@
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.14.14",
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.0",

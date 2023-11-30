@@ -1,11 +1,5 @@
+import { TicketInfo } from 'shared/utils/types/ticket';
 import { create } from 'zustand';
-
-interface TicketInfo {
-  id: number;
-  name: string;
-  date: Date;
-  price: number;
-}
 
 interface BookingState {
   tickets: Record<string, TicketInfo & { count: number }>;

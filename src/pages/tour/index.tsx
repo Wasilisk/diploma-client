@@ -65,7 +65,7 @@ export const Tour = () => {
             {tour?.content}
           </Markdown>
         </div>
-        {tour && <BookingSection tourInfo={tour.tourInfo} ticketTypes={tour.ticketTypes} />}
+        {tour && <BookingSection tour={tour} />}
       </div>
     </div>
   );
