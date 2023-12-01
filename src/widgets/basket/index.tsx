@@ -8,14 +8,13 @@ import { uk } from 'date-fns/locale';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { PaymentForm } from 'widgets/basket/payment-form';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const Basket = () => {
   let [isOpen, setIsOpen] = useState(false);
-  const { getTotalTicketsCount, tickets, addTicket, removeTicket, calculateTotalPrice } =
-    useBasket();
+  const { getTotalTicketsCount, tickets, addTicket, removeTicket } = useBasket();
 
   const totalTicketsCount = getTotalTicketsCount();
-  const totalPrice = calculateTotalPrice();
   const closeModal = () => setIsOpen(false);
 
   return (
@@ -29,8 +28,14 @@ export const Basket = () => {
       <Dialog as='div' className='relative z-10' onClose={closeModal} open={isOpen}>
         <div className='fixed inset-0 bg-black/25' />
         <div className='fixed inset-0 overflow-y-auto'>
-          <div className='flex min-h-full items-center justify-center py-4'>
-            <Dialog.Panel className='w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white px-20 py-10 text-left align-middle shadow-xl'>
+          <div className='flex min-h-full items-center justify-center sm:py-4'>
+            <Dialog.Panel className='relative w-full max-w-5xl transform overflow-hidden bg-white p-4 text-left align-middle shadow-xl sm:rounded-2xl sm:px-14 sm:py-10'>
+              <div
+                className='absolute right-2 top-2 cursor-pointer p-2 sm:right-4 sm:top-4'
+                onClick={closeModal}
+              >
+                <CloseIcon />
+              </div>
               <Dialog.Title
                 as='h3'
                 className='mb-10 text-center text-3xl font-bold leading-10 text-neutral-800'
@@ -39,7 +44,10 @@ export const Basket = () => {
               </Dialog.Title>
               <div className='mt-2 divide-y divide-gray-200 border-y border-gray-200'>
                 {Object.values(tickets).map((ticket) => (
-                  <div className='flex items-center justify-between py-5' key={ticket.id}>
+                  <div
+                    className='grid grid-cols-1 gap-y-4 py-5 sm:flex-row sm:items-center md:grid-cols-3'
+                    key={ticket.id}
+                  >
                     <div className='flex items-center gap-x-5'>
                       <img
                         className='h-20 w-20 rounded-2xl'
@@ -59,13 +67,13 @@ export const Basket = () => {
                         {format(new Date(ticket.date), "d MMMM 'в' HH:mm | EEEE", { locale: uk })}
                       </span>
                     </div>
-                    <div className='flex items-center gap-x-5'>
+                    <div className='flex w-full items-center justify-between gap-x-5 md:w-auto'>
                       <div>
                         <span className='text-sm font-semibold leading-relaxed text-neutral-800'>
                           {ticket.name}
                           <br />
                         </span>
-                        <p className='text-right text-base font-bold leading-relaxed text-neutral-800'>
+                        <p className='text-base font-bold leading-relaxed text-neutral-800 sm:text-right'>
                           {ticket.price} грн
                         </p>
                       </div>
@@ -86,7 +94,7 @@ export const Basket = () => {
                   </div>
                 ))}
               </div>
-              <PaymentForm totalPrice={totalPrice} />
+              <PaymentForm />
             </Dialog.Panel>
           </div>
         </div>

@@ -13,9 +13,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...otherProps}
         className={twMerge(`
-          px-4 py-2 text-sm font-medium text-neutral-800 transition duration-300 ease-in-out 
-          hover:bg-opacity-90  
-          md:px-6 md:py-3 md:text-base
+          px-6 py-3 text-base font-medium text-neutral-800 
+          transition  
+          duration-300 ease-in-out hover:bg-opacity-90
           ${variant === 'primary' ? 'bg-yellow-400' : 'bg-zinc-100'} 
           ${rounded ? 'rounded-full' : 'rounded-lg'} 
           ${fullWidth ? 'w-full' : 'w-fit'} 

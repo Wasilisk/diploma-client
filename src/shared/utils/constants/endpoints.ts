@@ -12,4 +12,7 @@ export const endpoints = {
   },
   supportMessage: '/support-message',
   ticketTypes: '/ticket-types',
+  payment: {
+    createCheckoutSession: '/payment/create-checkout-session',
+  },
 };
