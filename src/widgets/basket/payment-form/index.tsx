@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { PaymentFormSchema } from 'shared/utils/validations/payment-form-schema';
 import { PaymentFormData } from 'shared/utils/types/orders.types';
 import { useUserProfile } from 'shared/utils/hooks/use-user-profile';
+import { toast } from 'react-toastify';
 
 export const PaymentForm = () => {
   const { calculateTotalPrice, tickets } = useBasket();
@@ -32,14 +33,16 @@ export const PaymentForm = () => {
       tourId: ticket.tour.id,
       ticketTypeId: ticket.id,
       count: ticket.count,
-      date: new Date(ticket.date).toString(),
+      date: new Date(ticket.date).toISOString(),
     }));
   };
 
   const handleSubmit = async () => {
-    await PaymentService.submitOrders(parseTickets(tickets)).then(
-      (response: any) => (window.location = response.data.url),
-    );
+    await PaymentService.submitOrders(parseTickets(tickets))
+      .then((response) => (window.location.href = response.data.url))
+      .catch(() => {
+        toast.error('Помилка під час оплати !');
+      });
   };
 
   return (

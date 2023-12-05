@@ -15,6 +15,7 @@ import { ProfileLayout } from 'widgets/profile-layout';
 import { Direction } from 'pages/direction';
 import { Tours } from 'pages/tours';
 import { Tour } from 'pages/tour';
+import { SuccessPayment } from 'pages/success-payment';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -34,6 +35,7 @@ export const AppRouter = () => {
           <Route path='/direction/:directionId' element={<Direction />} />
           <Route path='tours' element={<Tours />} />
           <Route path='tours/:tourId' element={<Tour />} />
+          <Route path='success-payment' element={<SuccessPayment />} />
         </Route>
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<Login />} />

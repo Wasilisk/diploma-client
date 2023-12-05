@@ -11,8 +11,8 @@ export const endpoints = {
     profile: '/account/profile',
   },
   supportMessage: '/support-message',
-  ticketTypes: '/ticket-types',
+  ticketTypes: '/order-types',
   payment: {
-    createCheckoutSession: '/payment/create-checkout-session',
+    createCheckoutSession: '/create-checkout-session',
   },
 };
