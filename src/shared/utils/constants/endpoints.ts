@@ -15,4 +15,5 @@ export const endpoints = {
   payment: {
     createCheckoutSession: '/create-checkout-session',
   },
+  orders: 'orders',
 };

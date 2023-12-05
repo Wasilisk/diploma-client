@@ -32,7 +32,7 @@ export const AppRouter = () => {
               <Route path='/profile/support' element={<Support />} />
             </Route>
           </Route>
-          <Route path='/direction/:directionId' element={<Direction />} />
+          <Route path='/directions/:directionId' element={<Direction />} />
           <Route path='tours' element={<Tours />} />
           <Route path='tours/:tourId' element={<Tour />} />
           <Route path='success-payment' element={<SuccessPayment />} />

@@ -1,7 +1,7 @@
 import { DateRangeFilter, SelectorFilter } from 'shared/ui/filters';
 import { useFilters } from 'shared/utils/hooks/use-filters';
 import { useDirections } from 'shared/utils/hooks/use-directions';
-import { paymentTypes, prices, tourTypes } from 'shared/utils/constants';
+import { prices, tourTypes } from 'shared/utils/constants';
 import { FilterTypes } from 'shared/utils/types';
 
 interface FiltersProps {
@@ -13,20 +13,17 @@ export const Filters = ({
     direction: true,
     dateRange: true,
     priceRange: true,
-    paymentType: true,
     tourType: true,
   },
 }: FiltersProps) => {
   const {
     direction: directionValue,
-    paymentType: paymentTypeValue,
     tourType: tourTypeValue,
     priceRange: priceRangeValue,
     dateRange: dateRangeValue,
     setDateRange,
     setDirection,
     setPriceRange,
-    setPaymentType,
     setTourType,
   } = useFilters();
   const { data: directions } = useDirections();
@@ -54,16 +51,6 @@ export const Filters = ({
           placeholder='Не вказано'
           items={prices}
           renderItemValue={(price) => price.label}
-        />
-      )}
-      {filtersVisible.paymentType && (
-        <SelectorFilter
-          value={paymentTypeValue}
-          onChange={setPaymentType}
-          label='Тип оплати'
-          placeholder='Не вказано'
-          items={paymentTypes}
-          renderItemValue={(item) => item.label}
         />
       )}
       {filtersVisible.tourType && (

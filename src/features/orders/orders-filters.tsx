@@ -1,14 +1,17 @@
-import { useState } from 'react';
+interface OrdersFiltersProps {
+  activeFilter: string;
+  onChange: (filter: string) => void;
+}
 
-export const OrdersFilters = () => {
-  const filters = ['Всі', 'Активні', 'Завершені'];
+const filtersLocalization: Record<string, string> = {
+  ALL: 'Всі',
+  ACTIVE: 'Активні',
+  COMPLETED: 'Завершені',
+  CANCELED: 'Відмінені',
+};
 
-  const [activeFilter, setActiveFilter] = useState('Всі');
-
-  const handleFilterClick = (filter: string) => {
-    setActiveFilter(filter);
-  };
-
+const filters = ['ALL', 'ACTIVE', 'COMPLETED', 'CANCELED'];
+export const OrdersFilters = ({ activeFilter, onChange }: OrdersFiltersProps) => {
   return (
     <div className='flex gap-x-4'>
       {filters.map((filter, index) => (
@@ -17,9 +20,9 @@ export const OrdersFilters = () => {
           className={`${
             activeFilter === filter && 'bg-yellow-400 font-semibold'
           } cursor-pointer rounded-2xl px-3 py-1`}
-          onClick={() => handleFilterClick(filter)}
+          onClick={() => onChange(filter)}
         >
-          {filter}
+          {filtersLocalization[filter]}
         </div>
       ))}
     </div>

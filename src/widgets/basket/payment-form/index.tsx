@@ -11,7 +11,7 @@ import { useUserProfile } from 'shared/utils/hooks/use-user-profile';
 import { toast } from 'react-toastify';
 
 export const PaymentForm = () => {
-  const { calculateTotalPrice, tickets } = useBasket();
+  const { calculateTotalPrice, tickets, resetBasket } = useBasket();
   const { data } = useUserProfile();
   const {
     register,
@@ -33,13 +33,17 @@ export const PaymentForm = () => {
       tourId: ticket.tour.id,
       ticketTypeId: ticket.id,
       count: ticket.count,
+      price: ticket.price,
       date: new Date(ticket.date).toISOString(),
     }));
   };
 
   const handleSubmit = async () => {
     await PaymentService.submitOrders(parseTickets(tickets))
-      .then((response) => (window.location.href = response.data.url))
+      .then((response) => {
+        window.location.href = response.data.url;
+        resetBasket();
+      })
       .catch(() => {
         toast.error('Помилка під час оплати !');
       });

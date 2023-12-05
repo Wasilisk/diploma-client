@@ -10,7 +10,7 @@ export const DirectionsMenu = () => {
 
   const linkDirections = directions?.map((direction) => ({
     label: direction.name,
-    to: `${endpoints.directions}/${direction.id}`,
+    to: `/${endpoints.directions}/${direction.id}`,
   }));
 
   return (

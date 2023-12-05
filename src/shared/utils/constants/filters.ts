@@ -8,11 +8,6 @@ export const prices: FilterOption<PriceRange>[] = [
   { label: 'від 3000 ₴', value: { from: 3000, to: null } },
 ];
 
-export const paymentTypes: FilterOption<string>[] = [
-  { label: 'Оплата на місці (без передоплати)', value: 'без' },
-  { label: 'Оплата з передоплатою', value: 'з' },
-];
-
 export const tourTypes: FilterOption<string>[] = [
   { label: 'Індивідуальний', value: 'без' },
   { label: 'Груповий', value: 'з' },

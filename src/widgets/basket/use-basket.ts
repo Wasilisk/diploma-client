@@ -8,6 +8,7 @@ interface BasketState {
   removeTicket: (ticketId: number) => void;
   calculateTotalPrice: () => number;
   getTotalTicketsCount: () => number;
+  resetBasket: () => void;
 }
 
 type BasketPersist = (
@@ -55,6 +56,7 @@ export const useBasket = create<BasketState>(
         Object.values(get().tickets).reduce((acc, ticket) => acc + ticket.price * ticket.count, 0),
       getTotalTicketsCount: () =>
         Object.values(get().tickets).reduce((acc, ticket) => acc + ticket.count, 0),
+      resetBasket: () => set(() => ({ tickets: {} })),
     }),
     { name: 'basket' },
   ),

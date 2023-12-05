@@ -45,10 +45,10 @@ export const Basket = () => {
               <div className='mt-2 divide-y divide-gray-200 border-y border-gray-200'>
                 {Object.values(tickets).map((ticket) => (
                   <div
-                    className='grid grid-cols-1 gap-y-4 py-5 sm:flex-row sm:items-center md:grid-cols-3'
+                    className='grid grid-cols-12 gap-4 py-5 sm:flex-row sm:items-center'
                     key={ticket.id}
                   >
-                    <div className='flex items-center gap-x-5'>
+                    <div className='col-span-4 flex items-center gap-x-5'>
                       <img
                         className='h-20 w-20 rounded-2xl'
                         src={ticket.tour.image}
@@ -58,7 +58,7 @@ export const Basket = () => {
                         {ticket.tour.name}
                       </p>
                     </div>
-                    <div>
+                    <div className='col-span-3'>
                       <span className='text-sm font-semibold leading-relaxed text-neutral-800'>
                         Дата і час
                         <br />
@@ -67,16 +67,16 @@ export const Basket = () => {
                         {format(new Date(ticket.date), "d MMMM 'в' HH:mm | EEEE", { locale: uk })}
                       </span>
                     </div>
-                    <div className='flex w-full items-center justify-between gap-x-5 md:w-auto'>
-                      <div>
-                        <span className='text-sm font-semibold leading-relaxed text-neutral-800'>
-                          {ticket.name}
-                          <br />
-                        </span>
-                        <p className='text-base font-bold leading-relaxed text-neutral-800 sm:text-right'>
-                          {ticket.price} грн
-                        </p>
-                      </div>
+                    <div className='col-span-3'>
+                      <p className='text-right text-sm font-semibold leading-relaxed text-neutral-800'>
+                        {ticket.name}
+                        <br />
+                      </p>
+                      <p className='text-base font-bold leading-relaxed text-neutral-800 sm:text-right'>
+                        {ticket.price} грн
+                      </p>
+                    </div>
+                    <div className='col-span-2 flex w-full items-center justify-between'>
                       <div className='flex items-center gap-x-2'>
                         <IconButton
                           className='h-9 md:h-9'

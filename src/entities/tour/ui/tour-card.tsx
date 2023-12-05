@@ -10,7 +10,7 @@ interface TourCardProps {
 export const TourCard = ({ tour }: TourCardProps) => {
   return (
     <div className='flex flex-col'>
-      <Link to={`${endpoints.tours}/${tour.id}`}>
+      <Link to={`/${endpoints.tours}/${tour.id}`}>
         <img
           className='h-28 w-full rounded-tl-2xl rounded-tr-2xl object-cover sm:h-44 md:h-48 lg:h-56'
           src={tour.gallery[0]}
