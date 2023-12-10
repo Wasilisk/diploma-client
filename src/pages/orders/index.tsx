@@ -1,7 +1,7 @@
 import { OrdersFilters } from 'features/orders/orders-filters';
 import { useUserOrders } from 'shared/utils/hooks/use-user-orders';
 import { useState } from 'react';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { Pagination } from 'features/pagination';
 import { Link } from 'react-router-dom';
@@ -58,7 +58,11 @@ export const Orders = () => {
                   <br />
                 </span>
                 <span className='text-base leading-relaxed text-neutral-800'>
-                  {format(new Date(order.date), "d MMMM 'в' HH:mm | EEEE", { locale: uk })}
+                  {format(
+                    parse(order.tourGroup.time, 'HH:mm', new Date(order.tourGroup.date)),
+                    "d MMMM 'в' HH:mm | EEEE",
+                    { locale: uk },
+                  )}
                 </span>
               </div>
               <div>
@@ -73,7 +77,9 @@ export const Orders = () => {
                   Передоплата
                   <br />
                 </span>
-                <span className='text-base leading-relaxed text-neutral-800'>100 ₴</span>
+                <span className='text-base leading-relaxed text-neutral-800'>
+                  {order.ticketType.price * 0.1} ₴
+                </span>
               </div>
               <div className='flex items-center justify-between gap-x-5'>
                 <div

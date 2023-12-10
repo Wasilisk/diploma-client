@@ -1,26 +1,39 @@
-import { TicketInfo } from 'shared/utils/types/ticket';
 import { create } from 'zustand';
+import { BookingOrderInfo } from 'shared/utils/types/orders.types';
+import { TicketType } from 'shared/utils/types/ticket';
+import { addDays, startOfDay } from 'date-fns';
 
 interface BookingState {
-  tickets: Record<string, TicketInfo & { count: number }>;
-  addTicket: (payload: TicketInfo) => void;
+  orderInfo: BookingOrderInfo;
+  tickets: Record<string, number> | null;
+  ticketTypes: TicketType[];
+  setTicketTypes: (payload: TicketType[]) => void;
+  setOrderInfo: (payload: BookingOrderInfo) => void;
+  addTicket: (ticketTypeId: number) => void;
   removeTicket: (ticketTypeId: number) => void;
   reset: () => void;
-  calculateTotalPrice: () => number;
+  getTotalTicketsCount: () => number;
+  getTotalTicketsPrice: () => number;
+  getTicketTypeById: (ticketTypeId: number | string) => TicketType | undefined;
 }
 
 export const useBooking = create<BookingState>((set, get) => ({
-  tickets: {},
-  addTicket: (payload) =>
+  ticketTypes: [],
+  orderInfo: {
+    tourId: null,
+    date: startOfDay(addDays(new Date(), 1)),
+    time: null,
+  },
+  tickets: null,
+  setTicketTypes: (payload) => set(() => ({ ticketTypes: payload })),
+  setOrderInfo: (payload) => set(() => ({ orderInfo: payload })),
+  addTicket: (ticketTypeId) =>
     set((state) => {
-      if (state.tickets[payload.id]) {
+      if (state.tickets?.[ticketTypeId]) {
         return {
           tickets: {
             ...state.tickets,
-            [payload.id]: {
-              ...state.tickets[payload.id],
-              count: state.tickets[payload.id].count + 1,
-            },
+            [ticketTypeId]: state.tickets[ticketTypeId] + 1,
           },
         };
       }
@@ -28,15 +41,19 @@ export const useBooking = create<BookingState>((set, get) => ({
       return {
         tickets: {
           ...state.tickets,
-          [payload.id]: { ...payload, count: 1 },
+          [ticketTypeId]: 1,
         },
       };
     }),
-  removeTicket: (ticketId) =>
+  removeTicket: (ticketTypeId) =>
     set((state) => {
-      if (state.tickets[ticketId] && state.tickets[ticketId].count === 1) {
+      const currentTicketType = state.tickets?.[ticketTypeId];
+
+      if (!currentTicketType) return state;
+
+      if (currentTicketType === 1) {
         const ticketsCopy = { ...state.tickets };
-        delete ticketsCopy[ticketId];
+        delete ticketsCopy[ticketTypeId];
         return {
           tickets: ticketsCopy,
         };
@@ -45,14 +62,36 @@ export const useBooking = create<BookingState>((set, get) => ({
       return {
         tickets: {
           ...state.tickets,
-          [ticketId]: {
-            ...state.tickets[ticketId],
-            count: state.tickets[ticketId].count - 1,
-          },
+          [ticketTypeId]: currentTicketType - 1,
         },
       };
     }),
-  reset: () => set(() => ({ tickets: {}, total: 0 })),
-  calculateTotalPrice: () =>
-    Object.values(get().tickets).reduce((acc, ticket) => acc + ticket.price * ticket.count, 0),
+  reset: () =>
+    set(() => ({
+      tickets: null,
+      ticketTypes: [],
+      orderInfo: {
+        tourId: null,
+        date: startOfDay(addDays(new Date(), 1)),
+        time: null,
+      },
+    })),
+  getTotalTicketsCount: () => {
+    const tickets = get().tickets;
+    if (tickets) return Object.values(tickets).reduce((acc, ticketsCount) => acc + ticketsCount, 0);
+    return 0;
+  },
+  getTotalTicketsPrice: () => {
+    const tickets = get().tickets;
+    if (tickets)
+      return Object.entries(tickets).reduce((total, [ticketTypeId, count]) => {
+        const currentTicketType = get().getTicketTypeById(ticketTypeId);
+        if (currentTicketType) return total + currentTicketType.price * count;
+        return total;
+      }, 0);
+    return 0;
+  },
+  getTicketTypeById: (ticketTypeId: number | string) => {
+    return get().ticketTypes.find((ticketType) => ticketType.id === Number(ticketTypeId));
+  },
 }));

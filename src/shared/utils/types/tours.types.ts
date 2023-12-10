@@ -9,6 +9,7 @@ export type Tour = {
   gallery: string[];
   tourInfo: TourInfo;
   ticketTypes: TicketType[];
+  schedule: TourSchedule;
 };
 
 export type TourInfo = {
@@ -18,4 +19,24 @@ export type TourInfo = {
   groupSize?: string;
   groupType: string;
   paymentInfo?: string;
+};
+
+export type TourSchedule = {
+  tourId: number;
+  startDate: string;
+  endDate: string;
+  daysOff: string[];
+  monday: string[];
+  tuesday: string[];
+  wednesday: string[];
+  thursday: string[];
+  friday: string[];
+  saturday: string[];
+  sunday: string[];
+};
+
+export type TourGroup = {
+  id: number;
+  date: Date;
+  time: string;
 };

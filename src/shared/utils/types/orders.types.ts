@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { PaymentFormSchema } from 'shared/utils/validations/payment-form-schema';
-import { Tour } from 'shared/utils/types/tours.types';
+import { Tour, TourGroup } from 'shared/utils/types/tours.types';
 import { TicketType } from 'shared/utils/types/ticket';
 import { Direction } from 'shared/utils/types/directions.types';
 import { PaginationParams } from 'shared/utils/types/pagination.types';
@@ -12,9 +12,9 @@ export interface GetOrdersParams {
 
 export type OrderData = {
   tourId: number;
-  ticketTypeId: number;
-  count: number;
   date: string;
+  time: string;
+  orders: Array<{ ticketTypeId: number; count: number }>;
 };
 
 export type PaymentFormData = z.infer<typeof PaymentFormSchema>;
@@ -31,4 +31,11 @@ export type Order = {
   ticketTypeId: number;
   tour: Tour & { direction: Direction };
   ticketType: TicketType;
+  tourGroup: TourGroup;
 };
+
+export interface BookingOrderInfo {
+  tourId: number | null;
+  date: Date;
+  time: string | null;
+}

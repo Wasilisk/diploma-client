@@ -4,11 +4,12 @@ import { IconButton } from 'shared/ui/icon-button';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useBooking } from 'widgets/booking-section/use-booking';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { addDays, format, isEqual, startOfDay } from 'date-fns';
 import DatePicker from 'react-datepicker';
-import { Tour } from 'shared/utils/types';
-import { useBasket } from 'widgets/basket/use-basket';
+import { Tour, TourSchedule } from 'shared/utils/types';
+import { CheckoutModal } from 'widgets/booking-section/checkout-modal';
+import { SelectorFilter } from 'shared/ui/filters';
 
 const tomorrowDate = startOfDay(addDays(new Date(), 1));
 
@@ -17,20 +18,26 @@ type BookingSectionProps = {
 };
 
 export const BookingSection = ({ tour }: BookingSectionProps) => {
-  const [date, setDate] = useState(tomorrowDate);
-  const { tickets, calculateTotalPrice, reset, removeTicket, addTicket } = useBooking();
-  const { addToBasket } = useBasket();
+  const {
+    orderInfo: { date, tourId, time },
+    tickets,
+    reset,
+    removeTicket,
+    addTicket,
+    setOrderInfo,
+    setTicketTypes,
+    getTotalTicketsPrice,
+  } = useBooking();
 
   const tomorrowDateSelected = isEqual(date, tomorrowDate);
+  const selectedDayName = format(new Date(date), 'iiii').toLowerCase();
+  const daySchedule = tour.schedule[selectedDayName as keyof TourSchedule] as string[];
 
   useEffect(() => {
+    setTicketTypes(tour.ticketTypes);
+    setOrderInfo({ tourId: tour.id, time, date });
     return reset;
   }, []);
-
-  const onSubmit = () => {
-    addToBasket(tickets);
-    reset();
-  };
 
   return (
     <aside className='h-fit max-w-none rounded-2xl bg-neutral-100 lg:max-w-md'>
@@ -40,7 +47,7 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
           <Button
             variant={tomorrowDateSelected ? 'primary' : 'secondary'}
             className='w-full text-sm font-normal sm:w-1/2 sm:flex-grow'
-            onClick={() => setDate(tomorrowDate)}
+            onClick={() => setOrderInfo({ tourId, time, date: tomorrowDate })}
             rounded
           >
             Завтра
@@ -49,10 +56,9 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
             <DatePicker
               className='w-full'
               selected={date}
-              onChange={(date) => {
-                setDate(date ? startOfDay(date) : tomorrowDate);
-                reset();
-              }}
+              onChange={(date) =>
+                setOrderInfo({ tourId, time, date: date ? startOfDay(date) : tomorrowDate })
+              }
               wrapperClassName='w-full'
               customInput={
                 <Button
@@ -68,6 +74,14 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
             />
           </div>
         </div>
+        <SelectorFilter
+          value={time}
+          onChange={(value) => setOrderInfo({ tourId, time: value, date })}
+          label='Час'
+          placeholder='Оберіть час'
+          items={daySchedule}
+          renderItemValue={(time) => time}
+        />
         <div className='divide-y divide-gray-200'>
           {tour.ticketTypes.map((ticketType) => (
             <div key={ticketType.id} className='flex justify-between gap-x-5 py-4'>
@@ -83,19 +97,13 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
                 <IconButton
                   className='h-9 md:h-9'
                   icon={<AddIcon />}
-                  onClick={() =>
-                    addTicket({
-                      ...ticketType,
-                      date: new Date(),
-                      tour: { name: tour.name, id: tour.id, image: tour.gallery[0] },
-                    })
-                  }
+                  onClick={() => addTicket(ticketType.id)}
                 />
-                {tickets[ticketType.id]?.count || 0}
+                {tickets?.[ticketType.id] ?? 0}
                 <IconButton
                   className='h-9 md:h-9'
                   icon={<RemoveIcon />}
-                  disabled={!tickets[ticketType.id]}
+                  disabled={!tickets || !tickets[ticketType.id]}
                   onClick={() => removeTicket(ticketType.id)}
                 />
               </div>
@@ -104,19 +112,11 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
           <div className='flex items-center justify-between py-4'>
             <p className='text-sm font-medium text-zinc-700'>В сумі</p>
             <p className='text-2xl font-semibold leading-relaxed text-zinc-700'>
-              {calculateTotalPrice()} ₴
+              {getTotalTicketsPrice()} ₴
             </p>
           </div>
         </div>
-        <Button
-          variant='primary'
-          rounded
-          fullWidth
-          disabled={Object.values(tickets).length === 0}
-          onClick={onSubmit}
-        >
-          Додати до замовлення
-        </Button>
+        <CheckoutModal />
       </div>
       <div className='flex flex-col gap-y-4 p-8'>
         <div className='flex flex-col justify-between gap-x-4 sm:flex-row'>

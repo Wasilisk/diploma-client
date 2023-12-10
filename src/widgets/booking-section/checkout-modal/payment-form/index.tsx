@@ -1,17 +1,16 @@
 import { Input } from 'shared/ui/input';
 import { Button } from 'shared/ui/button';
 import { PaymentService } from 'shared/services';
-import { useBasket } from 'widgets/basket/use-basket';
-import { TicketInfo } from 'shared/utils/types/ticket';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PaymentFormSchema } from 'shared/utils/validations/payment-form-schema';
 import { PaymentFormData } from 'shared/utils/types/orders.types';
 import { useUserProfile } from 'shared/utils/hooks/use-user-profile';
 import { toast } from 'react-toastify';
+import { useBooking } from 'widgets/booking-section/use-booking';
 
 export const PaymentForm = () => {
-  const { calculateTotalPrice, tickets, resetBasket } = useBasket();
+  const { orderInfo, tickets, getTotalTicketsPrice } = useBooking();
   const { data } = useUserProfile();
   const {
     register,
@@ -25,24 +24,22 @@ export const PaymentForm = () => {
     },
   });
 
-  const totalPrice = calculateTotalPrice();
-  const prepayment = totalPrice * 0.2;
-
-  const parseTickets = (tickets: Record<string, TicketInfo & { count: number }>) => {
-    return Object.values(tickets).map((ticket) => ({
-      tourId: ticket.tour.id,
-      ticketTypeId: ticket.id,
-      count: ticket.count,
-      price: ticket.price,
-      date: new Date(ticket.date).toISOString(),
-    }));
-  };
+  const totalPrice = getTotalTicketsPrice();
+  const prepayment = totalPrice * 0.1;
 
   const handleSubmit = async () => {
-    await PaymentService.submitOrders(parseTickets(tickets))
+    if (!orderInfo || !tickets) return;
+    await PaymentService.submitOrders({
+      tourId: orderInfo.tourId,
+      date: new Date(orderInfo.date).toISOString(),
+      time: '12:00',
+      orders: Object.entries(tickets).map(([ticketTypeId, count]) => ({
+        ticketTypeId: Number(ticketTypeId),
+        count,
+      })),
+    })
       .then((response) => {
         window.location.href = response.data.url;
-        resetBasket();
       })
       .catch(() => {
         toast.error('Помилка під час оплати !');
