@@ -7,4 +7,8 @@ export class AccountService {
   static async getUserProfile(): Promise<AxiosResponse<FullUserInfo>> {
     return $api.get(endpoints.account.profile);
   }
+
+  static async updateUserProfile(data: FormData): Promise<AxiosResponse<void>> {
+    return $api.patch(endpoints.account.profile, data);
+  }
 }

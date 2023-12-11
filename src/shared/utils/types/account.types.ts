@@ -1,3 +1,6 @@
+import { UserProfileFormSchema } from 'shared/utils/validations/user-profile-form-schema';
+import { z } from 'zod';
+
 export interface User {
   id: number;
   email: string;
@@ -15,3 +18,5 @@ export interface Profile {
 export type FullUserInfo = User & {
   profile: Profile;
 };
+
+export type UserProfileFormData = z.infer<typeof UserProfileFormSchema>;
