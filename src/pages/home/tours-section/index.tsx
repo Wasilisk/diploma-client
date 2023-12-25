@@ -4,13 +4,23 @@ import { Link } from 'react-router-dom';
 import { useTours } from 'shared/utils/hooks/use-tours';
 import { useFilters } from 'shared/utils/hooks/use-filters';
 import { Filters } from 'widgets/filters';
+import { ContentState } from 'shared/ui/content-state';
+import { parseContentState } from 'shared/ui/content-state/utils';
+import { isEmpty } from 'shared/utils/libs';
 
 export const ToursSection = () => {
   const { direction } = useFilters();
-  const { data: tours } = useTours({
+  const {
+    data: tours,
+    isLoading,
+    isError,
+    refetch,
+  } = useTours({
     directionId: direction?.id,
     paginationParams: { page: 0, size: 6 },
   });
+
+  const contentStateValue = parseContentState(isLoading, isError, isEmpty(tours?.items));
 
   return (
     <div className='my-10 md:mt-20'>
@@ -24,19 +34,31 @@ export const ToursSection = () => {
           dateRange: true,
         }}
       />
-      <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
-        {tours?.items.map((tour) => <TourCard tour={tour} key={tour.id} />)}
-      </div>
-      <div className='flex justify-center'>
-        <Link
-          className='mt-8 md:mt-16'
-          to={direction?.id ? `/direction/${direction?.id}` : '/tours'}
-        >
-          <Button variant='primary' rounded>
-            Всі екскурсії
-          </Button>
-        </Link>
-      </div>
+      <ContentState
+        state={contentStateValue}
+        loadingPlaceholderComponent={
+          <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
+            {Array.from({ length: 8 }).map(() => (
+              <div className='flex h-36 w-full animate-pulse rounded-2xl bg-gray-200' />
+            ))}
+          </div>
+        }
+        onReload={refetch}
+      >
+        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
+          {tours?.items.map((tour) => <TourCard tour={tour} key={tour.id} />)}
+        </div>
+        <div className='flex justify-center'>
+          <Link
+            className='mt-8 md:mt-16'
+            to={direction?.id ? `/direction/${direction?.id}` : '/tours'}
+          >
+            <Button variant='primary' rounded>
+              Всі екскурсії
+            </Button>
+          </Link>
+        </div>
+      </ContentState>
     </div>
   );
 };
