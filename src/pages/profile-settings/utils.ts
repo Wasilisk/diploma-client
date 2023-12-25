@@ -6,7 +6,7 @@ export const createFormData = (data: UserProfileFormData, currentImage: File | n
   formData.append('lastName', data.lastName);
   formData.append('email', data.email);
   formData.append('phone', data.phone);
-  formData.append('profilePicture', data.profilePicture);
+  formData.append('profilePicture', data.profilePicture ?? '');
 
   if (currentImage) {
     formData.append('file', currentImage);

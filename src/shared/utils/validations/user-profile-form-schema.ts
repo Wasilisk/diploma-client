@@ -5,5 +5,5 @@ export const UserProfileFormSchema = z.object({
   lastName: z.string(),
   phone: z.string(),
   email: z.string(),
-  profilePicture: z.string(),
+  profilePicture: z.string().nullable(),
 });
