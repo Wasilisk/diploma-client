@@ -1,36 +1,23 @@
-import { Tab } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-
-const tabs = [
-  {
-    index: 0,
-    label: 'Мої замовлення',
-    to: '/profile/orders',
-  },
-  {
-    index: 1,
-    label: 'Налаштування профілю',
-    to: '/profile/account-settings',
-  },
-  {
-    index: 2,
-    label: 'Написати в підтримку',
-    to: '/profile/support',
-  },
-];
+import {Tab} from '@headlessui/react';
+import {Fragment, useEffect, useState, WheelEventHandler} from 'react';
+import {Link, Outlet, useLocation} from 'react-router-dom';
+import {useRole} from "shared/utils/hooks/use-role";
+import {profileMenuConfig} from "widgets/profile-layout/config";
 
 export const ProfileLayout = () => {
+  const role = useRole()
   const location = useLocation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const availableTabs = profileMenuConfig.filter(tab => tab.role.includes(role))
+
   useEffect(() => {
-    const currentTabIndex = tabs.find((tab) => tab.to === location.pathname)?.index || 0;
+    const currentTabIndex  = availableTabs.findIndex(tab => tab.to === location.pathname) || 0;
     setSelectedIndex(currentTabIndex);
   }, [location.pathname]);
 
-  const handleScroll = (event: any) => {
-    const container = event.target;
+  const handleScroll = (event: WheelEvent) => {
+    const container = event.target as HTMLElement;
     const scrollAmount = event.deltaY;
     container.scrollTo({
       top: 0,
@@ -43,10 +30,10 @@ export const ProfileLayout = () => {
     <>
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List
-          onWheel={handleScroll}
+          onWheel={handleScroll as unknown as WheelEventHandler<HTMLDivElement>}
           className='no-scrollbar mt-4 flex gap-x-5 overflow-x-scroll border-b border-gray-200 md:mt-10 md:gap-x-10'
         >
-          {tabs.map((tab) => (
+          {availableTabs.map((tab) => (
             <Tab as={Fragment} key={tab.to}>
               {({ selected }) => (
                 <Link

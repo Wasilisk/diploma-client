@@ -12,7 +12,7 @@ import { useBooking } from 'widgets/booking-section/use-booking';
 import { useTour } from 'shared/utils/hooks/use-tour';
 
 export const CheckoutModal = () => {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { getTotalTicketsCount, tickets, orderInfo, addTicket, removeTicket, getTicketTypeById } =
     useBooking();
   const { data: tour } = useTour(orderInfo.tourId);

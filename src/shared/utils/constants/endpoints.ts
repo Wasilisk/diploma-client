@@ -9,6 +9,9 @@ export const endpoints = {
   tours: 'tours',
   account: {
     profile: '/account/profile',
+    allUsers: '/account/all-users',
+    banUser: '/account/ban',
+    changeRole: '/account/update-role',
   },
   supportMessage: '/support-message',
   ticketTypes: '/order-types',

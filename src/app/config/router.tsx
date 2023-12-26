@@ -16,6 +16,7 @@ import { Direction } from 'pages/direction';
 import { Tours } from 'pages/tours';
 import { Tour } from 'pages/tour';
 import { SuccessPayment } from 'pages/success-payment';
+import {UserManagement} from "pages/user-management";
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -30,6 +31,7 @@ export const AppRouter = () => {
               <Route path='/profile/orders' element={<Orders />} />
               <Route path='/profile/account-settings' element={<ProfileSettings />} />
               <Route path='/profile/support' element={<Support />} />
+              <Route path='/profile/user-management' element={<UserManagement />} />
             </Route>
           </Route>
           <Route path='/directions/:directionId' element={<Direction />} />

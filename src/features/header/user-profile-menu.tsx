@@ -5,17 +5,16 @@ import { MenuItems } from 'shared/ui/menu-items';
 import { ProfileAvatar } from 'entities/profile/ui/profile-avatar';
 import { useAuth } from 'shared/utils/hooks/use-auth';
 import { useUserProfile } from 'shared/utils/hooks/use-user-profile';
+import {profileMenuConfig} from "widgets/profile-layout/config";
+import {useRole} from "shared/utils/hooks/use-role";
 
 export const UserProfileMenu = () => {
+  const role = useRole()
   const { logout } = useAuth();
   const { data, isLoading } = useUserProfile();
 
   const username = `${data?.profile.firstName} ${data?.profile.lastName}`;
-  const links = [
-    { to: '/profile/orders', label: 'Мої замовлення' },
-    { to: '/profile/account-settings', label: 'Налаштування профіля' },
-    { to: '/profile/support', label: 'Підтримка' },
-  ];
+  const availableMenuItems = profileMenuConfig.filter(tab => tab.role.includes(role))
 
   return (
     <Menu as='div' className='relative'>
@@ -30,7 +29,7 @@ export const UserProfileMenu = () => {
           </div>
         </Menu.Button>
       )}
-      <MenuItems items={links} className='origin-to-right right-0'>
+      <MenuItems items={availableMenuItems} className='origin-to-right right-0'>
         <Menu.Item
           as={'button'}
           className='w-full whitespace-nowrap py-2 text-left font-medium'
