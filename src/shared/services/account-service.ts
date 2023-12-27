@@ -1,7 +1,13 @@
 import { $api } from 'shared/configs/axios-config';
 import { AxiosResponse } from 'axios';
 import { endpoints } from 'shared/utils/constants';
-import {ChangeUserRoleParams, FullUserInfo, PaginatedResource, PaginationParams} from 'shared/utils/types';
+import {
+  ChangeUserRoleParams,
+  FullUserInfo,
+  GetAllUsersParams,
+  PaginatedResource,
+} from 'shared/utils/types';
+import {parseFilterParams} from "shared/utils/libs/parse-filter-params";
 
 export class AccountService {
   static async getUserProfile(): Promise<AxiosResponse<FullUserInfo>> {
@@ -13,9 +19,14 @@ export class AccountService {
   }
 
   static async getAllUsers(
-    params: PaginationParams,
+    params: GetAllUsersParams,
   ): Promise<AxiosResponse<PaginatedResource<FullUserInfo>>> {
-    return $api.get(endpoints.account.allUsers, { params });
+    return $api.get(endpoints.account.allUsers, {
+      params: {
+        ...params.paginationParams,
+        filter: parseFilterParams(params.searchParams),
+      },
+    });
   }
 
   static async toggleBanUser(userId: number): Promise<AxiosResponse<void>> {

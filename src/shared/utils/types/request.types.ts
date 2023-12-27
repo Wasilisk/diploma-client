@@ -10,3 +10,13 @@ export interface ChangeUserRoleParams {
   id: number;
   role: Role;
 }
+
+export interface GetAllUsersParams {
+  paginationParams: PaginationParams;
+  searchParams: {
+    firstName: string | null;
+    lastName: string | null;
+    email: string | null;
+    role: Role | null;
+  }
+}

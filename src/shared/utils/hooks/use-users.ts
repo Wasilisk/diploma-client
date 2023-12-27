@@ -1,13 +1,15 @@
-import { PaginationParams } from 'shared/utils/types';
+import { GetAllUsersParams } from 'shared/utils/types';
 import { useQuery } from 'react-query';
 import { endpoints } from 'shared/utils/constants';
 import { AccountService } from 'shared/services';
+import { useDebounce } from '@uidotdev/usehooks';
 
-export const useUsers = (paginationParams: PaginationParams) => {
+export const useUsers = (params: GetAllUsersParams) => {
+  const searchParams = useDebounce(params.searchParams, 1000);
   return useQuery(
-    [endpoints.account.allUsers, paginationParams],
+    [endpoints.account.allUsers, params.paginationParams, searchParams],
     async () => {
-      const response = await AccountService.getAllUsers(paginationParams);
+      const response = await AccountService.getAllUsers(params);
       return response.data;
     },
   );

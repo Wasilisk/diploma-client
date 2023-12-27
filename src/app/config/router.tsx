@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from 'widgets/layout';
 import { Login } from 'pages/login';
 import { Registration } from 'pages/registration';
@@ -16,7 +16,8 @@ import { Direction } from 'pages/direction';
 import { Tours } from 'pages/tours';
 import { Tour } from 'pages/tour';
 import { SuccessPayment } from 'pages/success-payment';
-import {UserManagement} from "pages/user-management";
+import { UserManagement } from 'pages/user-management';
+import { Role } from 'shared/utils/types';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -26,12 +27,19 @@ export const AppRouter = () => {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
-          <Route element={<ProtectedRoute redirectPath='/' isAllowed={isAuth} />}>
+          <Route element={<ProtectedRoute isAllowed={isAuth} />}>
             <Route path='/profile' element={<ProfileLayout />}>
               <Route path='/profile/orders' element={<Orders />} />
               <Route path='/profile/account-settings' element={<ProfileSettings />} />
               <Route path='/profile/support' element={<Support />} />
-              <Route path='/profile/user-management' element={<UserManagement />} />
+              <Route
+                path='/profile/user-management'
+                element={
+                  <ProtectedRoute requiredRoles={[Role.MODERATOR, Role.ADMIN]}>
+                    <UserManagement />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Route>
           <Route path='/directions/:directionId' element={<Direction />} />

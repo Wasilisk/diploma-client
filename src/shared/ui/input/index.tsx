@@ -1,17 +1,23 @@
-import { forwardRef, InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes, ReactElement } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, ...inputProps }, ref) => {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  inputAdornment?: ReactElement;
+}
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, inputAdornment, ...inputProps }, ref) => {
     return (
-      <input
-        ref={ref}
-        {...inputProps}
-        className={twMerge(
-          `w-full rounded-lg bg-zinc-100 px-6 py-4 outline-none placeholder:text-base placeholder:font-normal placeholder:text-neutral-400`,
-          className,
-        )}
-      />
+      <div className='relative'>
+        <input
+          ref={ref}
+          {...inputProps}
+          className={twMerge(
+            `w-full rounded-lg bg-zinc-100 px-6 py-4 outline-none placeholder:text-base placeholder:font-normal placeholder:text-neutral-400`,
+            className,
+          )}
+        />
+        {inputAdornment}
+      </div>
     );
   },
 );

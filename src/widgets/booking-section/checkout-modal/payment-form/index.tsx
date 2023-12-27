@@ -30,7 +30,7 @@ export const PaymentForm = () => {
   const handleSubmit = async () => {
     if (!orderInfo || !tickets) return;
     await PaymentService.submitOrders({
-      tourId: orderInfo.tourId,
+      tourId: orderInfo.tourId!,
       date: new Date(orderInfo.date).toISOString(),
       time: '12:00',
       orders: Object.entries(tickets).map(([ticketTypeId, count]) => ({
