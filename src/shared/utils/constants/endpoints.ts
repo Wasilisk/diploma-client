@@ -13,7 +13,11 @@ export const endpoints = {
     banUser: '/account/ban',
     changeRole: '/account/update-role',
   },
-  supportMessage: '/support-message',
+  supportMessage: {
+    message: '/support-message',
+    updateStatus: '/support-message/status',
+    reply: '/support-message/reply',
+  },
   ticketTypes: '/order-types',
   payment: {
     createCheckoutSession: '/create-checkout-session',

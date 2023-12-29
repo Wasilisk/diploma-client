@@ -14,3 +14,4 @@ export interface DateRange {
 }
 
 export type FilterTypes = 'direction' | 'dateRange' | 'priceRange' | 'paymentType' | 'tourType';
+export type SortingDirection = 'desc' | 'asc';

@@ -1,4 +1,4 @@
-export const parseFilterParams = (params: { [key: string]: string | null }) => {
+export const parseParams = (params: Record<string, string | null>) => {
   const allFieldsAreNull = Object.values(params).every((field) => field === null);
   if (allFieldsAreNull) {
     return undefined;

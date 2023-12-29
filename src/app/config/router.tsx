@@ -18,6 +18,7 @@ import { Tour } from 'pages/tour';
 import { SuccessPayment } from 'pages/success-payment';
 import { UserManagement } from 'pages/user-management';
 import { Role } from 'shared/utils/types';
+import {TechnicalSupport} from "pages/technical-support";
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -37,6 +38,14 @@ export const AppRouter = () => {
                 element={
                   <ProtectedRoute requiredRoles={[Role.MODERATOR, Role.ADMIN]}>
                     <UserManagement />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/profile/technical-support'
+                element={
+                  <ProtectedRoute requiredRoles={[Role.MODERATOR, Role.ADMIN]}>
+                    <TechnicalSupport />
                   </ProtectedRoute>
                 }
               />

@@ -22,8 +22,8 @@ export const profileMenuConfig = [
         role: [Role.ADMIN, Role.MODERATOR],
     },
     {
-        label: 'Листи користувачів',
-        to: '/profile/support',
-        role: [Role.MODERATOR],
+        label: 'Технічна підтримка',
+        to: '/profile/technical-support',
+        role: [Role.MODERATOR, Role.ADMIN],
     },
 ];

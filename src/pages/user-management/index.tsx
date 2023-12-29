@@ -52,7 +52,7 @@ export const UserManagement = () => {
         <div className='f-wull flex justify-center py-4'>
           <Pagination
             onPageChange={setCurrentPage}
-            totalCount={users?.totalItems}
+            totalCount={users.totalItems}
             currentPage={currentPage}
             pageSize={USERS_PAGE_SIZE}
           />

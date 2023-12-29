@@ -7,7 +7,7 @@ import {
   GetAllUsersParams,
   PaginatedResource,
 } from 'shared/utils/types';
-import {parseFilterParams} from "shared/utils/libs/parse-filter-params";
+import {parseParams} from "shared/utils/libs/parse-params";
 
 export class AccountService {
   static async getUserProfile(): Promise<AxiosResponse<FullUserInfo>> {
@@ -24,7 +24,7 @@ export class AccountService {
     return $api.get(endpoints.account.allUsers, {
       params: {
         ...params.paginationParams,
-        filter: parseFilterParams(params.searchParams),
+        filter: parseParams(params.searchParams),
       },
     });
   }
