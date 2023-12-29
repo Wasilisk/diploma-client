@@ -23,4 +23,8 @@ export const endpoints = {
     createCheckoutSession: '/create-checkout-session',
   },
   orders: 'orders',
+  guidePermission: {
+    request: '/guide-permission',
+    updateStatus: '/guide-permission/status',
+  }
 };

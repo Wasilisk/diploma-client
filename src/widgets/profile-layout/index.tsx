@@ -1,18 +1,18 @@
-import {Tab} from '@headlessui/react';
-import {Fragment, useEffect, useState, WheelEventHandler} from 'react';
-import {Link, Outlet, useLocation} from 'react-router-dom';
-import {useRole} from "shared/utils/hooks/use-role";
-import {profileMenuConfig} from "widgets/profile-layout/config";
+import { Tab } from '@headlessui/react';
+import { Fragment, useEffect, useState, WheelEventHandler } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useRole } from 'shared/utils/hooks/use-role';
+import { profileMenuConfig } from 'widgets/profile-layout/config';
 
 export const ProfileLayout = () => {
-  const role = useRole()
+  const role = useRole();
   const location = useLocation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const availableTabs = profileMenuConfig.filter(tab => tab.role.includes(role))
+  const availableTabs = profileMenuConfig.filter((tab) => tab.role.includes(role));
 
   useEffect(() => {
-    const currentTabIndex  = availableTabs.findIndex(tab => tab.to === location.pathname) || 0;
+    const currentTabIndex = availableTabs.findIndex((tab) => tab.to === location.pathname) || 0;
     setSelectedIndex(currentTabIndex);
   }, [location.pathname]);
 
@@ -27,7 +27,7 @@ export const ProfileLayout = () => {
   };
 
   return (
-    <>
+    <main className='container mx-auto flex flex-1 flex-col px-5'>
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List
           onWheel={handleScroll as unknown as WheelEventHandler<HTMLDivElement>}
@@ -52,6 +52,6 @@ export const ProfileLayout = () => {
       <div className='my-6 flex flex-col gap-y-5 md:my-12 md:gap-y-10'>
         <Outlet />
       </div>
-    </>
+    </main>
   );
 };

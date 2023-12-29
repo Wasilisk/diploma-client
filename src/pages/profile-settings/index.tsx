@@ -117,7 +117,7 @@ export const ProfileSettings = () => {
             >
               <p>{field.label}:</p>
               {isEditMode ? (
-                <Input className='min-w-16 w-1/4 px-4 py-2' {...register(field.key)} />
+                <Input inputClassName='px-4 py-2' className='min-w-16 w-1/4 ' {...register(field.key)} />
               ) : (
                 <p>{field.value}</p>
               )}

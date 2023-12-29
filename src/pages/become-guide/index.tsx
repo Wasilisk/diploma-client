@@ -49,7 +49,7 @@ export const BecomeGuide = () => {
             <h5 className='leading-14 text-5xl font-black text-neutral-900'>
               Станьте гідом
               <br />
-              нашого сервису
+              нашого сервісу
             </h5>
             <img src={BannerDivider} className='mt-1 w-56' alt='Banner divider' />
             <p className='mt-4 max-w-xl leading-relaxed text-neutral-800'>

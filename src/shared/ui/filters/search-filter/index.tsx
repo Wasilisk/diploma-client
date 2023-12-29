@@ -21,7 +21,8 @@ export const SearchFilter = ({ label, value, onChange, ...inputProps }: SearchFi
         value={value ?? ''}
         {...inputProps}
         onChange={handleChange}
-        className='w-auto rounded-full px-4 py-2'
+        inputClassName='px-4 py-2'
+        className='w-auto rounded-full'
         inputAdornment={
           value ? (
             <div

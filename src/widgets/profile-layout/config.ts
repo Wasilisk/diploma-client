@@ -26,4 +26,9 @@ export const profileMenuConfig = [
         to: '/profile/technical-support',
         role: [Role.MODERATOR, Role.ADMIN],
     },
+    {
+        label: 'Запити на гіда',
+        to: '/profile/guide-permission-requests',
+        role: [Role.MODERATOR, Role.ADMIN],
+    },
 ];

@@ -2,27 +2,35 @@ import { Input } from 'shared/ui/input';
 import { TextArea } from 'shared/ui/text-area';
 import { Button } from 'shared/ui/button';
 import { useMutation } from 'react-query';
-import { AuthService } from 'shared/services';
 import { AxiosError } from 'axios';
-import {
-  AxiosErrorResponseData,
-  GuideRegistrationFormData,
-} from 'shared/utils/types';
+import { AxiosErrorResponseData, GuideRegistrationFormData } from 'shared/utils/types';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { guideRegistrationFormSchema } from 'shared/utils/validations/guide-registration-form-schema';
+import { GuidePermissionService } from 'shared/services/guide-permission-service';
+import { useUserProfile } from 'shared/utils/hooks/use-user-profile';
 
 export const GuideRegistrationForm = () => {
-  const { mutate: registerGuide, isLoading } = useMutation(AuthService.login, {
+  const { data: userProfileData } = useUserProfile();
+  const { mutate: registerGuide, isLoading } = useMutation(GuidePermissionService.createRequest, {
     onSuccess: () => {
-      toast.success('as');
+      toast.success('Запит на отримання статусу гіда успішно створенно!');
     },
     onError: (error: AxiosError<AxiosErrorResponseData>) => {
       toast.error(error.response?.data.message);
     },
   });
   const { register, handleSubmit } = useForm<GuideRegistrationFormData>({
+    values: userProfileData
+      ? {
+          firstName: userProfileData?.profile.firstName,
+          lastName: userProfileData?.profile.lastName,
+          email: userProfileData?.email,
+          phone: userProfileData?.phone,
+          description: '',
+        }
+      : undefined,
     resolver: zodResolver(guideRegistrationFormSchema),
   });
 

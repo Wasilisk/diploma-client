@@ -1,6 +1,7 @@
 import { PaginationParams } from 'shared/utils/types/pagination.types';
 import { Role } from 'shared/utils/types/account.types';
 import { SupportMessageStatus } from 'shared/utils/types/support.types';
+import {GuidePermissionRequestStatus} from "shared/utils/types/guide-permission-request.types";
 
 export interface GetToursParams {
   directionId?: number;
@@ -32,6 +33,16 @@ export interface GetAllSupportMessagesParams {
   };
 }
 
+export interface GetAllGuidePermissionRequestsParams {
+  paginationParams: PaginationParams;
+  filter: {
+    status: string | null;
+  };
+  sort: {
+    createdAt: string | null;
+  };
+}
+
 export interface UpdateSupportMessageStatusData {
   id: number;
   status: SupportMessageStatus;
@@ -40,4 +51,9 @@ export interface UpdateSupportMessageStatusData {
 export interface ReplyToMessageData {
   id: number;
   content: string;
+}
+
+export interface UpdateGuidePermissionRequestStatusData {
+  id: number;
+  status: GuidePermissionRequestStatus;
 }

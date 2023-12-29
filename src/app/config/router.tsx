@@ -20,6 +20,7 @@ import { UserManagement } from 'pages/user-management';
 import { Role } from 'shared/utils/types';
 import { TechnicalSupport } from 'pages/technical-support';
 import { BecomeGuide } from 'pages/become-guide';
+import { GuidePermissionRequests } from 'pages/guide-permission-requests';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -47,6 +48,14 @@ export const AppRouter = () => {
                 element={
                   <ProtectedRoute requiredRoles={[Role.MODERATOR, Role.ADMIN]}>
                     <TechnicalSupport />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/profile/guide-permission-requests'
+                element={
+                  <ProtectedRoute requiredRoles={[Role.MODERATOR, Role.ADMIN]}>
+                    <GuidePermissionRequests />
                   </ProtectedRoute>
                 }
               />
