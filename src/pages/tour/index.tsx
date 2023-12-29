@@ -31,7 +31,7 @@ export const Tour = () => {
   const { data: tour } = useTour(Number(tourId));
 
   return (
-    <div className='my-10'>
+    <main className='container mx-auto my-10 flex flex-1 flex-col px-5'>
       <div className='flex flex-col justify-between sm:flex-row'>
         <h2 className='text-3xl font-bold leading-10 text-neutral-800'>{tour?.name}</h2>
         <div className='hidden flex-col text-right sm:flex'>
@@ -67,6 +67,6 @@ export const Tour = () => {
         </div>
         {tour && <BookingSection tour={tour} />}
       </div>
-    </div>
+    </main>
   );
 };

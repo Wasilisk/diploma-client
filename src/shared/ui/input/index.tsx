@@ -7,7 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, inputAdornment, ...inputProps }, ref) => {
     return (
-      <div className='relative'>
+      <div className='relative w-full'>
         <input
           ref={ref}
           {...inputProps}

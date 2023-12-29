@@ -17,33 +17,35 @@ export const Direction = () => {
   });
 
   return (
-    <div className='my-6 sm:my-10'>
-      <PageHeader
-        title={`Экскурсії по напрямку: ${directionData?.name}`}
-        description={`Загальна кількість екскурсій: ${tours?.totalItems}`}
-      />
-      <Filters
-        filtersVisible={{
-          paymentType: true,
-          priceRange: true,
-          tourType: true,
-          direction: false,
-          dateRange: true,
-        }}
-      />
-      <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
-        {tours?.items.map((tour) => <TourCard key={tour.id} tour={tour} />)}
-      </div>
-      {tours && tours.totalItems > TOURS_PAGE_SIZE && (
-        <div className='f-wull flex justify-center'>
-          <Pagination
-            onPageChange={setCurrentPage}
-            totalCount={tours?.totalItems}
-            currentPage={currentPage}
-            pageSize={TOURS_PAGE_SIZE}
-          />
+    <main className='container mx-auto flex flex-1 flex-col px-5'>
+      <div className='my-6 sm:my-10'>
+        <PageHeader
+          title={`Экскурсії по напрямку: ${directionData?.name}`}
+          description={`Загальна кількість екскурсій: ${tours?.totalItems}`}
+        />
+        <Filters
+          filtersVisible={{
+            paymentType: true,
+            priceRange: true,
+            tourType: true,
+            direction: false,
+            dateRange: true,
+          }}
+        />
+        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
+          {tours?.items.map((tour) => <TourCard key={tour.id} tour={tour} />)}
         </div>
-      )}
-    </div>
+        {tours && tours.totalItems > TOURS_PAGE_SIZE && (
+          <div className='f-wull flex justify-center'>
+            <Pagination
+              onPageChange={setCurrentPage}
+              totalCount={tours?.totalItems}
+              currentPage={currentPage}
+              pageSize={TOURS_PAGE_SIZE}
+            />
+          </div>
+        )}
+      </div>
+    </main>
   );
 };

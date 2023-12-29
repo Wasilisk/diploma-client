@@ -17,7 +17,7 @@ export const MainBanner = () => {
         <br />
         екскурсій
       </h1>
-      <img src={BannerDivider} className='mt-1 w-56' alt='Swoosh!' />
+      <img src={BannerDivider} className='mt-1 w-56' alt='Banner divider' />
       <p className='mb-12 mt-2 text-center text-sm font-semibold md:text-base'>
         Екскурсії та приватні гіди по Україні
       </p>

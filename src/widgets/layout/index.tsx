@@ -6,9 +6,7 @@ export const Layout = () => {
   return (
     <>
       <Header />
-      <main className='container mx-auto flex flex-1 flex-col px-5'>
-        <Outlet />
-      </main>
+      <Outlet />
       <Footer />
     </>
   );

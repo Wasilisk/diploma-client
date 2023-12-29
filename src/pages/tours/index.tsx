@@ -13,7 +13,7 @@ export const Tours = () => {
   });
 
   return (
-    <div className='my-6 sm:my-10'>
+    <main className='container mx-auto my-6 flex flex-1 flex-col px-5 sm:my-10'>
       <PageHeader
         title='Усі екскурсії'
         description={`Загальна кількість екскурсій: ${tours?.totalItems}`}
@@ -32,6 +32,6 @@ export const Tours = () => {
           />
         </div>
       )}
-    </div>
+    </main>
   );
 };

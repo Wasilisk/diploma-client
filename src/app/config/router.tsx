@@ -18,7 +18,8 @@ import { Tour } from 'pages/tour';
 import { SuccessPayment } from 'pages/success-payment';
 import { UserManagement } from 'pages/user-management';
 import { Role } from 'shared/utils/types';
-import {TechnicalSupport} from "pages/technical-support";
+import { TechnicalSupport } from 'pages/technical-support';
+import { BecomeGuide } from 'pages/become-guide';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -55,6 +56,14 @@ export const AppRouter = () => {
           <Route path='tours' element={<Tours />} />
           <Route path='tours/:tourId' element={<Tour />} />
           <Route path='success-payment' element={<SuccessPayment />} />
+          <Route
+            path='become-guide'
+            element={
+              <ProtectedRoute requiredRoles={[Role.USER]}>
+                <BecomeGuide />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<Login />} />
