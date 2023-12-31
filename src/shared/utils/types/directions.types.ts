@@ -5,8 +5,8 @@ export type Direction = {
   name: string;
   image: string;
   _count: {
-    tours: number;
-  };
+    tours: number,
+  }
 };
 
 export type DirectionWithTours = Direction & {

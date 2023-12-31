@@ -24,7 +24,14 @@ export const ToursSection = () => {
 
   return (
     <div className='my-10 md:mt-20'>
-      <h6 className='text-4xl font-extrabold'>Екскурсії</h6>
+      <div className='flex justify-between'>
+        <h6 className='text-4xl font-extrabold'>Екскурсії</h6>
+        <Link to={direction?.id ? `/direction/${direction?.id}` : '/tours'}>
+          <Button variant='primary'>
+            Всі екскурсії
+          </Button>
+        </Link>
+      </div>
       <Filters
         filtersVisible={{
           paymentType: false,
@@ -47,16 +54,6 @@ export const ToursSection = () => {
       >
         <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8'>
           {tours?.items.map((tour) => <TourCard tour={tour} key={tour.id} />)}
-        </div>
-        <div className='flex justify-center'>
-          <Link
-            className='mt-8 md:mt-16'
-            to={direction?.id ? `/direction/${direction?.id}` : '/tours'}
-          >
-            <Button variant='primary' rounded>
-              Всі екскурсії
-            </Button>
-          </Link>
         </div>
       </ContentState>
     </div>

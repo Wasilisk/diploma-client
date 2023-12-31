@@ -1,10 +1,10 @@
 import { BurgerMenu } from 'features/header/burger-menu';
 import Logo from 'shared/assets/logo.png';
-import { DirectionsMenu } from 'features/header/directions-menu';
 import { Link } from 'react-router-dom';
 import { Button } from 'shared/ui/button';
 import { UserProfileMenu } from 'features/header/user-profile-menu';
 import { useAuth } from 'shared/utils/hooks/use-auth';
+import { DirectionsMenu } from 'features/header/directions-menu';
 
 export const Header = () => {
   const { isAuth } = useAuth();

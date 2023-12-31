@@ -21,6 +21,7 @@ import { Role } from 'shared/utils/types';
 import { TechnicalSupport } from 'pages/technical-support';
 import { BecomeGuide } from 'pages/become-guide';
 import { GuidePermissionRequests } from 'pages/guide-permission-requests';
+import {Directions} from "pages/directions";
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -62,6 +63,7 @@ export const AppRouter = () => {
             </Route>
           </Route>
           <Route path='/directions/:directionId' element={<Direction />} />
+          <Route path='/directions' element={<Directions />} />
           <Route path='tours' element={<Tours />} />
           <Route path='tours/:tourId' element={<Tour />} />
           <Route path='success-payment' element={<SuccessPayment />} />

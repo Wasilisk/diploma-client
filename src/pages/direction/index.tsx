@@ -13,6 +13,7 @@ export const Direction = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: directionData } = useDirectionById(Number(directionId));
   const { data: tours } = useTours({
+    directionId: Number(directionId),
     paginationParams: { page: currentPage - 1, size: TOURS_PAGE_SIZE },
   });
 

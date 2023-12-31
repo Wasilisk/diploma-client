@@ -2,23 +2,35 @@ import { Menu } from '@headlessui/react';
 import { Button } from 'shared/ui/button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { MenuItems } from 'shared/ui/menu-items';
-import { useDirections } from 'shared/utils/hooks/use-directions';
 import { endpoints } from 'shared/utils/constants';
+import { useInfiniteDirectionScroll } from 'shared/utils/hooks/use-infinite-direction-scroll';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 export const DirectionsMenu = () => {
-  const { data: directions, isLoading } = useDirections();
+  const { ref, inView } = useInView();
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteDirectionScroll();
 
-  const linkDirections = directions?.map((direction) => ({
-    label: direction.name,
-    to: `/${endpoints.directions}/${direction.id}`,
-  }));
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
+
+  const linkDirections = data?.pages
+    .map((page) =>
+      page.items.map((direction) => ({
+        label: direction.name,
+        to: `/${endpoints.directions}/${direction.name}`,
+      })),
+    )
+    .flat();
 
   return (
     <Menu as='div' className='relative'>
       <Menu.Button
         as={Button}
         variant='primary'
-        rounded
         className='font-semibold'
         disabled={isLoading}
       >
@@ -29,8 +41,9 @@ export const DirectionsMenu = () => {
       </Menu.Button>
       {linkDirections && (
         <MenuItems
+          ref={ref}
           items={linkDirections}
-          className='origin-to-left no-scrollbar absolute left-0 max-h-56 w-full overflow-auto'
+          className='origin-to-left no-scrollbar absolute left-0 max-h-56 overflow-auto'
         />
       )}
     </Menu>

@@ -2,17 +2,13 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
-export interface EditProfileAvatarProps {
-  defaultValue: string;
+export interface ImageInputProps {
+  defaultValue?: string;
   onChange: (value: File) => void;
-  onProfileImageDelete: () => void;
+  onProfileImageDelete?: () => void;
 }
 
-export const EditProfileAvatar = ({
-  defaultValue,
-  onChange,
-  onProfileImageDelete,
-}: EditProfileAvatarProps) => {
+export const ImageInput = ({ defaultValue = '', onChange, onProfileImageDelete }: ImageInputProps) => {
   const [previewImage, setPreviewImage] = useState<string>(defaultValue);
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files as FileList;
@@ -31,7 +27,7 @@ export const EditProfileAvatar = ({
         <div
           className='absolute right-0 top-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-gray-50 text-gray-500'
           onClick={() => {
-            if (defaultValue === previewImage) onProfileImageDelete();
+            if (defaultValue === previewImage && onProfileImageDelete) onProfileImageDelete();
             setPreviewImage('');
           }}
         >

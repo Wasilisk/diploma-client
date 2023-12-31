@@ -7,7 +7,6 @@ import { AxiosErrorResponseData, UserProfileFormData } from 'shared/utils/types'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UserProfileFormSchema } from 'shared/utils/validations/user-profile-form-schema';
-import { EditProfileAvatar } from 'pages/profile-settings/edit-profile-avatar';
 import { useMutation, useQueryClient } from 'react-query';
 import { AccountService } from 'shared/services';
 import { toast } from 'react-toastify';
@@ -15,6 +14,7 @@ import { endpoints } from 'shared/utils/constants';
 import { createFormData } from 'pages/profile-settings/utils';
 import { ProfileEditFieldData } from 'pages/profile-settings/types';
 import { AxiosError } from 'axios';
+import {ImageInput} from "shared/ui/image-input";
 
 export const ProfileSettings = () => {
   const [currentImage, setCurrentImage] = useState<File | null>(null);
@@ -101,7 +101,7 @@ export const ProfileSettings = () => {
           )}
         </div>
       ) : (
-        <EditProfileAvatar
+        <ImageInput
           defaultValue={data?.profile.profilePicture || ''}
           onChange={setCurrentImage}
           onProfileImageDelete={deleteProfileImage}
@@ -117,7 +117,11 @@ export const ProfileSettings = () => {
             >
               <p>{field.label}:</p>
               {isEditMode ? (
-                <Input inputClassName='px-4 py-2' className='min-w-16 w-1/4 ' {...register(field.key)} />
+                <Input
+                  inputClassName='px-4 py-2'
+                  className='min-w-16 w-1/4 '
+                  {...register(field.key)}
+                />
               ) : (
                 <p>{field.value}</p>
               )}

@@ -1,8 +1,11 @@
 import { DateRangeFilter, SelectorFilter } from 'shared/ui/filters';
 import { useFilters } from 'shared/utils/hooks/use-filters';
-import { useDirections } from 'shared/utils/hooks/use-directions';
 import { prices, tourTypes } from 'shared/utils/constants';
 import { FilterTypes } from 'shared/utils/types';
+import { useInfiniteDirectionScroll } from 'shared/utils/hooks/use-infinite-direction-scroll';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
+import { Listbox } from '@headlessui/react';
 
 interface FiltersProps {
   filtersVisible?: Partial<Record<FilterTypes, boolean>>;
@@ -26,7 +29,15 @@ export const Filters = ({
     setPriceRange,
     setTourType,
   } = useFilters();
-  const { data: directions } = useDirections();
+  const { ref, inView } = useInView();
+  const { data, hasNextPage, fetchNextPage } = useInfiniteDirectionScroll();
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
+  const directionsItems = data?.pages.map((page) => page.items).flat() || [];
 
   return (
     <div className='my-4 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-100 py-2 md:py-4'>
@@ -36,8 +47,31 @@ export const Filters = ({
           onChange={setDirection}
           label='Напрямок'
           placeholder='Усі напрямки'
-          items={directions}
+          items={directionsItems}
           renderItemValue={(item) => item.name}
+          render={(item, index) => {
+            if (directionsItems.length === index + 1) {
+              return (
+                <Listbox.Option
+                  ref={ref}
+                  key={index}
+                  value={item}
+                  className='w-full cursor-pointer whitespace-nowrap py-2 font-medium'
+                >
+                  {item.name}
+                </Listbox.Option>
+              );
+            }
+            return (
+              <Listbox.Option
+                key={index}
+                value={item}
+                className='w-full cursor-pointer whitespace-nowrap py-2 font-medium'
+              >
+                {item.name}
+              </Listbox.Option>
+            );
+          }}
         />
       )}
       {filtersVisible.dateRange && (
