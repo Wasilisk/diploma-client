@@ -7,6 +7,7 @@ export const endpoints = {
   },
   directions: 'directions',
   tours: 'tours',
+  tourSchedule: 'tour-schedule',
   account: {
     profile: '/account/profile',
     allUsers: '/account/all-users',
@@ -18,7 +19,7 @@ export const endpoints = {
     updateStatus: '/support-message/status',
     reply: '/support-message/reply',
   },
-  ticketTypes: '/order-types',
+  ticketTypes: '/ticket-types',
   payment: {
     createCheckoutSession: '/create-checkout-session',
   },

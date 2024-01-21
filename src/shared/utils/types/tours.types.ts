@@ -1,4 +1,9 @@
 import { TicketType } from 'shared/utils/types/ticket';
+import {daysOfWeek} from "shared/utils/constants";
+import {z} from "zod";
+import {createTourFormSchema} from "shared/utils/validations/create-tour-form-schema";
+import {Direction} from "shared/utils/types/directions.types";
+
 
 export type Tour = {
   id: number;
@@ -9,16 +14,16 @@ export type Tour = {
   gallery: string[];
   tourInfo: TourInfo;
   ticketTypes: TicketType[];
+  direction: Direction;
   schedule: TourSchedule;
+  createdBy: number;
 };
 
 export type TourInfo = {
   meetingPlace: string;
   endingPlace: string;
   duration: string;
-  groupSize?: string;
-  groupType: string;
-  paymentInfo?: string;
+  groupSize: number;
 };
 
 export type TourSchedule = {
@@ -26,17 +31,12 @@ export type TourSchedule = {
   startDate: string;
   endDate: string;
   daysOff: string[];
-  monday: string[];
-  tuesday: string[];
-  wednesday: string[];
-  thursday: string[];
-  friday: string[];
-  saturday: string[];
-  sunday: string[];
-};
+} & Record<(typeof daysOfWeek)[number], string[]>;
 
 export type TourGroup = {
   id: number;
   date: Date;
   time: string;
 };
+
+export type CreateTourFormValues = z.infer<typeof createTourFormSchema>;

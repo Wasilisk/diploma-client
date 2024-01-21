@@ -48,7 +48,7 @@ export const PopularDirections = () => {
               name={direction.name}
               image={direction.image}
               contentAction={
-                <Link to={`/directions/${direction.id}`} className='w-fit'>
+                <Link to={`/tours?directionId=${direction.id}`} className='w-fit'>
                   <Button tabIndex={-1} className='px-2 py-1 md:px-2 md:py-1' variant='primary'>
                     Екскурсій: {direction._count.tours}
                   </Button>

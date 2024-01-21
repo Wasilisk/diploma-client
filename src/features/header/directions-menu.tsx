@@ -21,7 +21,7 @@ export const DirectionsMenu = () => {
     .map((page) =>
       page.items.map((direction) => ({
         label: direction.name,
-        to: `/${endpoints.directions}/${direction.name}`,
+        to: `/${endpoints.tours}?directionId=${direction.id}`,
       })),
     )
     .flat();

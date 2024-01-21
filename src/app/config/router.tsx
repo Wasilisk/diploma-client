@@ -12,7 +12,6 @@ import { Home } from 'pages/home';
 import { useAuth } from 'shared/utils/hooks/use-auth';
 import { ProtectedRoute } from 'shared/ui/protected-route';
 import { ProfileLayout } from 'widgets/profile-layout';
-import { Direction } from 'pages/direction';
 import { Tours } from 'pages/tours';
 import { Tour } from 'pages/tour';
 import { SuccessPayment } from 'pages/success-payment';
@@ -62,7 +61,6 @@ export const AppRouter = () => {
               />
             </Route>
           </Route>
-          <Route path='/directions/:directionId' element={<Direction />} />
           <Route path='/directions' element={<Directions />} />
           <Route path='tours' element={<Tours />} />
           <Route path='tours/:tourId' element={<Tour />} />

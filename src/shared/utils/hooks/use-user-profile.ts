@@ -4,7 +4,8 @@ import { AccountService } from 'shared/services';
 import { useAuth } from 'shared/utils/hooks/use-auth';
 
 export const useUserProfile = () => {
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
+
   return useQuery(
     endpoints.account.profile,
     async () => {
@@ -13,6 +14,10 @@ export const useUserProfile = () => {
     },
     {
       enabled: isAuth,
+      retry: false,
+      onError: () => {
+        logout();
+      },
     },
   );
 };

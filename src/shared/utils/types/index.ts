@@ -7,3 +7,4 @@ export * from './tours.types';
 export * from './pagination.types';
 export * from './request.types';
 export * from './filters.types';
+export * from './guide-permission-request.types'

@@ -1,11 +1,12 @@
 import { DateRangeFilter, SelectorFilter } from 'shared/ui/filters';
 import { useFilters } from 'shared/utils/hooks/use-filters';
 import { prices, tourTypes } from 'shared/utils/constants';
-import { FilterTypes } from 'shared/utils/types';
+import {Direction, FilterTypes} from 'shared/utils/types';
 import { useInfiniteDirectionScroll } from 'shared/utils/hooks/use-infinite-direction-scroll';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { Listbox } from '@headlessui/react';
+import {useSearchParams} from "react-router-dom";
 
 interface FiltersProps {
   filtersVisible?: Partial<Record<FilterTypes, boolean>>;
@@ -30,6 +31,7 @@ export const Filters = ({
     setTourType,
   } = useFilters();
   const { ref, inView } = useInView();
+  const [_, setSearchParams] = useSearchParams();
   const { data, hasNextPage, fetchNextPage } = useInfiniteDirectionScroll();
 
   useEffect(() => {
@@ -39,12 +41,26 @@ export const Filters = ({
   }, [inView, fetchNextPage, hasNextPage]);
   const directionsItems = data?.pages.map((page) => page.items).flat() || [];
 
+  const handleChangeDirection = (direction: Direction | null) => {
+    setDirection(direction)
+    if (direction) {
+      setSearchParams((searchParams) => {
+        searchParams.set('directionId', direction.id.toString());
+        return searchParams;
+      });
+    } else {
+      setSearchParams((searchParams) => {
+        searchParams.delete('directionId');
+        return searchParams;
+      });
+    }
+  }
   return (
     <div className='my-4 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-100 py-2 md:py-4'>
       {filtersVisible.direction && (
         <SelectorFilter
           value={directionValue}
-          onChange={setDirection}
+          onChange={handleChangeDirection}
           label='Напрямок'
           placeholder='Усі напрямки'
           items={directionsItems}

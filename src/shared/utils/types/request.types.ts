@@ -1,7 +1,11 @@
-import { PaginationParams } from 'shared/utils/types/pagination.types';
-import { Role } from 'shared/utils/types/account.types';
-import { SupportMessageStatus } from 'shared/utils/types/support.types';
-import { GuidePermissionRequestStatus } from 'shared/utils/types/guide-permission-request.types';
+import {
+  PaginationParams,
+  Role,
+  SupportMessageStatus,
+  GuidePermissionRequestStatus,
+  Tour,
+} from 'shared/utils/types';
+import { daysOfWeek } from 'shared/utils/constants';
 
 export interface GetToursParams {
   directionId?: number;
@@ -66,4 +70,35 @@ export interface ReplyToMessageData {
 export interface UpdateGuidePermissionRequestStatusData {
   id: number;
   status: GuidePermissionRequestStatus;
+}
+
+export interface AddTicketTypesData {
+  tourId: number;
+  name: string;
+  price: number;
+}
+
+export interface UpdateTicketTypesData {
+  id: number;
+  name: string;
+  price: number;
+}
+
+export type AddTourScheduleData = {
+  tourId: number;
+  startDate: string;
+  endDate: string;
+} & { [key in (typeof daysOfWeek)[number]]: string[] };
+
+export type UpdateTourScheduleData = AddTourScheduleData;
+
+export interface AddTourData extends Pick<Tour, 'name' | 'description' | 'content'> {
+  directionId: string;
+  files: File[];
+}
+export interface UpdateTourData extends Pick<Tour, 'name' | 'description' | 'content'> {
+  id: string;
+  directionId: string;
+  files: File[];
+  gallery: string[];
 }

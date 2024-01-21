@@ -13,7 +13,7 @@ export const IconButton = ({ id, icon, className, tooltipText, ...otherProps }: 
             {...otherProps}
             data-tooltip-id={id} data-tooltip-content={tooltipText}
             className={twMerge(
-                'aspect-square h-9 rounded-full bg-neutral-100 transition duration-300 ease-in-out hover:bg-opacity-90 md:h-[3rem]',
+                'aspect-square rounded-full bg-neutral-100 transition duration-300 ease-in-out hover:bg-opacity-90 h-12',
                 className,
             )}
         >

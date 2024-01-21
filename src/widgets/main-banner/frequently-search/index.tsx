@@ -17,7 +17,7 @@ export const FrequentlySearch = () => {
             <Chip
               key={direction.id}
               label={direction.name}
-              to={`${endpoints.directions}/${direction.id}`}
+              to={`${endpoints.tours}?directionId=${direction.id}`}
             />
           ))}
         </>
