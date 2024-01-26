@@ -1,4 +1,4 @@
-export const parseParams = (params?: Record<string, string | null>) => {
+export const parseParams = (params?: Record<string, string | number | null>) => {
   if(!params) return undefined
   const allFieldsAreNull = Object.values(params).every((field) => field === null);
   if (allFieldsAreNull) {
@@ -6,7 +6,7 @@ export const parseParams = (params?: Record<string, string | null>) => {
   } else {
     return Object.entries(params)
       .filter((property) => property[1] !== null)
-      .map(([key, value]) => `${key}:${value}`)
+      .map(([key, value]) => `${key}=${value}`)
       .join(';');
   }
 };

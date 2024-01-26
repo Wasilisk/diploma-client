@@ -7,17 +7,31 @@ import { Filters } from 'widgets/filters';
 import { ContentState } from 'shared/ui/content-state';
 import { parseContentState } from 'shared/ui/content-state/utils';
 import { isEmpty } from 'shared/utils/libs';
+import {
+  DEFAULT_MAX_GROUP_SIZE,
+  DEFAULT_MAX_PRICE,
+  DEFAULT_MIN_GROUP_SIZE,
+  DEFAULT_MIN_PRICE,
+} from 'widgets/filters/constants';
 
 export const ToursSection = () => {
-  const { direction } = useFilters();
+  const { direction, dateRange } = useFilters();
   const {
     data: tours,
     isLoading,
     isError,
     refetch,
   } = useTours({
-    directionId: direction?.id,
-    paginationParams: { page: 0, size: 6 },
+    filters: {
+      directionId: direction ? direction.id : null,
+      startDate: dateRange.from,
+      endDate: dateRange.to,
+      minPrice: DEFAULT_MIN_PRICE,
+      maxPrice: DEFAULT_MAX_PRICE,
+      minGroupSize: DEFAULT_MIN_GROUP_SIZE,
+      maxGroupSize: DEFAULT_MAX_GROUP_SIZE,
+    },
+    paginationParams: { page: 0, size: 8 },
   });
 
   const contentStateValue = parseContentState(isLoading, isError, isEmpty(tours?.items));
@@ -26,17 +40,14 @@ export const ToursSection = () => {
     <div className='my-10 md:mt-20'>
       <div className='flex justify-between'>
         <h6 className='text-4xl font-extrabold'>Екскурсії</h6>
-        <Link to={direction?.id ? `/direction/${direction?.id}` : '/tours'}>
-          <Button variant='primary'>
-            Всі екскурсії
-          </Button>
+        <Link to='/tours'>
+          <Button variant='primary'>Всі екскурсії</Button>
         </Link>
       </div>
       <Filters
         filtersVisible={{
-          paymentType: false,
           priceRange: false,
-          tourType: false,
+          groupSize: false,
           direction: true,
           dateRange: true,
         }}

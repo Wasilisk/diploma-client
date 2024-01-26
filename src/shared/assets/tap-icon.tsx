@@ -1,6 +1,6 @@
 export const TapIcon = () => (
   <svg width='51' height='51' viewBox='0 0 51 51' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <g id='tap 1' clip-path='url(#clip0_59_4749)'>
+    <g id='tap 1' clipPath='url(#clip0_59_4749)'>
       <g id='Group'>
         <g id='Group_2'>
           <g id='Group_3'>

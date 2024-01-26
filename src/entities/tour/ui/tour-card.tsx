@@ -1,17 +1,19 @@
 import { Link } from 'react-router-dom';
-import { Button } from 'shared/ui/button';
 import { Tour } from 'shared/utils/types/tours.types';
 import { endpoints } from 'shared/utils/constants';
-import { getMinPriceFromTicketTypes } from 'shared/utils/libs/getMinPriceFromTicketTypes';
-import {ReactNode} from "react";
+import {
+  sortTicketsByPrice,
+} from 'shared/utils/libs/getMinPriceFromTicketTypes';
+import { ReactNode } from 'react';
 
 interface TourCardProps {
   tour: Tour;
-  headerAction?: ReactNode
+  headerAction?: ReactNode;
 }
 export const TourCard = ({ tour, headerAction }: TourCardProps) => {
+  const sortedTicketTypesByPrice = sortTicketsByPrice(tour.ticketTypes);
   return (
-    <div className='group flex flex-col relative'>
+    <div className='group relative flex flex-col'>
       <Link to={`/${endpoints.tours}/${tour.id}`}>
         <img
           className='h-28 w-full rounded-tl-2xl rounded-tr-2xl object-cover sm:h-44 md:h-48 lg:h-56'
@@ -32,19 +34,16 @@ export const TourCard = ({ tour, headerAction }: TourCardProps) => {
             </p>
           </div>
         </div>
-        <div className='pt-2 md:pt-4'>
-          <div className='w-40'>
+        <div className='md:pt-2'>
+          <div className='flex items-center'>
             <span className='font-bold leading-relaxed md:text-xl'>
-              від {getMinPriceFromTicketTypes(tour.ticketTypes)} грн /
+              від {sortedTicketTypesByPrice[0].price} грн
             </span>
-            <span className='text-xs font-normal leading-relaxed'>с чол</span>
+            <span className='ml-1 text-xs font-normal leading-relaxed'>(за квиток)</span>
           </div>
         </div>
-        <Button variant='primary' rounded fullWidth className='mt-2 md:hidden'>
-          В корзину
-        </Button>
       </div>
-      <div className='hidden group-hover:flex justify-end gap-x-1 absolute right-2 top-2'>
+      <div className='absolute right-2 top-2 hidden justify-end gap-x-1 group-hover:flex'>
         {headerAction}
       </div>
     </div>

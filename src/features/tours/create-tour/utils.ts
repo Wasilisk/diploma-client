@@ -10,7 +10,7 @@ export const parseDefaultValues = (
 
   return {
     name: defaultValues?.name || '',
-    description: defaultValues?.name || '',
+    description: defaultValues?.description || '',
     direction: selectedDirection || defaultValues?.direction || null,
     content: defaultValues?.content || '',
     files: [],

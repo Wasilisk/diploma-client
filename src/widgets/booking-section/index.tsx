@@ -56,6 +56,8 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
             <DatePicker
               className='w-full'
               selected={date}
+              minDate={new Date(tour.schedule.startDate)}
+              maxDate={new Date(tour.schedule.endDate)}
               onChange={(date) =>
                 setOrderInfo({ tourId, time, date: date ? startOfDay(date) : tomorrowDate })
               }
@@ -130,6 +132,10 @@ export const BookingSection = ({ tour }: BookingSectionProps) => {
         <div className='flex flex-col justify-between gap-x-4 sm:flex-row'>
           <p className='text-sm font-bold leading-relaxed text-zinc-700'>Тривалість:</p>
           <p className='text-sm leading-normal text-zinc-700'>{tour.tourInfo.duration}</p>
+        </div>
+        <div className='flex flex-col justify-between gap-x-4 sm:flex-row'>
+          <p className='text-sm font-bold leading-relaxed text-zinc-700'>Розмір групи:</p>
+          <p className='text-sm leading-normal text-zinc-700'>{tour.tourInfo.groupSize} (чоловік)</p>
         </div>
       </div>
     </aside>

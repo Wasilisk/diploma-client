@@ -1,6 +1,6 @@
 export const TalkingIcon = () => (
   <svg width='57' height='57' viewBox='0 0 57 57' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <g id='talking 1' clip-path='url(#clip0_59_4808)'>
+    <g id='talking 1' clipPath='url(#clip0_59_4808)'>
       <g id='Group'>
         <path
           id='Vector'

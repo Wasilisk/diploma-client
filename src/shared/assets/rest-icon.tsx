@@ -1,6 +1,6 @@
 export const RestIcon = () => (
   <svg width='50' height='50' viewBox='0 0 50 50' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <g id='rest 1' clip-path='url(#clip0_59_4774)'>
+    <g id='rest 1' clipPath='url(#clip0_59_4774)'>
       <g id='Group'>
         <g id='Group_2'>
           <path

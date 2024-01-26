@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegistrationFormSchema } from 'shared/utils/validations/registration-form-schema';
 import { useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { ReCAPTCHA } from 'react-google-recaptcha';
 import { useMutation } from 'react-query';
 import { AuthService } from 'shared/services';
 import { toast } from 'react-toastify';
@@ -30,7 +30,7 @@ export const RegistrationForm = () => {
   });
 
   const onValid = async (data: RegistrationFormData) => {
-    let token = captchaRef.current?.getValue();
+    const token = captchaRef.current?.getValue();
     if (token) {
       try {
         await AuthService.verifyCaptcha(token);

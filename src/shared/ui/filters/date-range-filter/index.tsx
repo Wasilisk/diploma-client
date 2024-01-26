@@ -1,11 +1,11 @@
 import DatePicker from 'react-datepicker';
 import { FilterChip } from 'shared/ui/filters/filter-chip';
-import { DateRange } from 'shared/utils/types';
+import { FilterRange } from 'shared/utils/types';
 
 interface DateRangeFilterProps {
   label: string;
-  dateRange: DateRange;
-  setDateRange: (dateRange: DateRange) => void;
+  dateRange: FilterRange;
+  setDateRange: (dateRange: FilterRange) => void;
 }
 export const DateRangeFilter = ({ label, dateRange, setDateRange }: DateRangeFilterProps) => {
   return (
@@ -16,7 +16,9 @@ export const DateRangeFilter = ({ label, dateRange, setDateRange }: DateRangeFil
           <DatePicker
             selected={new Date(dateRange.from!)}
             placeholderText='Дата'
-            onChange={(date) => setDateRange({ ...dateRange, from: date })}
+            onChange={(date) =>
+              setDateRange({ ...dateRange, from: date?.toISOString() ?? new Date().toISOString() })
+            }
             customInput={<FilterChip />}
             dateFormat='dd.MM'
           />
@@ -26,7 +28,9 @@ export const DateRangeFilter = ({ label, dateRange, setDateRange }: DateRangeFil
           <DatePicker
             selected={new Date(dateRange.to!)}
             placeholderText='Дата'
-            onChange={(date) => setDateRange({ ...dateRange, to: date })}
+            onChange={(date) =>
+              setDateRange({ ...dateRange, to: date?.toISOString() ?? new Date().toISOString() })
+            }
             customInput={<FilterChip />}
             dateFormat='dd.MM'
           />

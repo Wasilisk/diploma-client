@@ -20,22 +20,38 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton } from 'shared/ui/icon-button';
 import { useSearchParams } from 'react-router-dom';
 import { useDirectionById } from 'shared/utils/hooks/use-direction-by-id';
+import { useFilters } from 'shared/utils/hooks/use-filters';
 
 export const Tours = () => {
   const role = useRole();
-  const [currentDirectionId, setCurrentDirectionId] = useState<number | undefined>();
-  const [searchParams] = useSearchParams();
+  const { dateRange, priceRange, groupSize, setDateRange } = useFilters();
   const { setIsOpen, setSelectedDirection, setDefaultValue } = useTourModal();
   const { data: user } = useUserProfile();
+
+  const [searchParams] = useSearchParams();
+  const directionIdSearchParam = searchParams.get('directionId');
+  const selectedDate = searchParams.get('selectedDate');
+
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: directionData } = useDirectionById(currentDirectionId);
+  const { data: directionData } = useDirectionById(
+    directionIdSearchParam ? Number(directionIdSearchParam) : undefined,
+  );
+
   const {
     data: tours,
     isLoading,
     isError,
     refetch,
   } = useTours({
-    directionId: currentDirectionId,
+    filters: {
+      directionId: directionIdSearchParam ? Number(directionIdSearchParam) : null,
+      startDate: selectedDate ? selectedDate : dateRange.from,
+      endDate: dateRange.to,
+      minPrice: priceRange.min,
+      maxPrice: priceRange.max,
+      minGroupSize: groupSize.min,
+      maxGroupSize: groupSize.max,
+    },
     paginationParams: { page: currentPage - 1, size: TOURS_PAGE_SIZE },
   });
 
@@ -47,9 +63,10 @@ export const Tours = () => {
   };
 
   useEffect(() => {
-    const directionIdSearchParam = searchParams.get('directionId');
-    setCurrentDirectionId(directionIdSearchParam ? parseInt(directionIdSearchParam) : undefined);
-  }, [searchParams]);
+    if (selectedDate) {
+      setDateRange({ from: selectedDate, to: dateRange.to });
+    }
+  }, []);
 
   return (
     <main className='container mx-auto my-6 flex flex-1 flex-col px-5 sm:my-10'>

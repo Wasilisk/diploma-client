@@ -1,13 +1,12 @@
 import { DateRangeFilter, SelectorFilter } from 'shared/ui/filters';
 import { useFilters } from 'shared/utils/hooks/use-filters';
-import { prices, tourTypes } from 'shared/utils/constants';
-import {Direction, FilterTypes} from 'shared/utils/types';
+import { Direction, FilterTypes } from 'shared/utils/types';
 import { useInfiniteDirectionScroll } from 'shared/utils/hooks/use-infinite-direction-scroll';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { Listbox } from '@headlessui/react';
-import {useSearchParams} from "react-router-dom";
-
+import { useSearchParams } from 'react-router-dom';
+import { MultiRangeFilter } from 'shared/ui/filters/multi-range-filter';
 interface FiltersProps {
   filtersVisible?: Partial<Record<FilterTypes, boolean>>;
 }
@@ -17,21 +16,21 @@ export const Filters = ({
     direction: true,
     dateRange: true,
     priceRange: true,
-    tourType: true,
+    groupSize: true,
   },
 }: FiltersProps) => {
   const {
     direction: directionValue,
-    tourType: tourTypeValue,
+    groupSize: groupSizeValue,
     priceRange: priceRangeValue,
     dateRange: dateRangeValue,
     setDateRange,
     setDirection,
+    setGroupSize,
     setPriceRange,
-    setTourType,
   } = useFilters();
   const { ref, inView } = useInView();
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const { data, hasNextPage, fetchNextPage } = useInfiniteDirectionScroll();
 
   useEffect(() => {
@@ -42,19 +41,14 @@ export const Filters = ({
   const directionsItems = data?.pages.map((page) => page.items).flat() || [];
 
   const handleChangeDirection = (direction: Direction | null) => {
-    setDirection(direction)
-    if (direction) {
-      setSearchParams((searchParams) => {
-        searchParams.set('directionId', direction.id.toString());
-        return searchParams;
-      });
-    } else {
-      setSearchParams((searchParams) => {
-        searchParams.delete('directionId');
-        return searchParams;
-      });
-    }
-  }
+    setDirection(direction);
+    setSearchParams((searchParams) => {
+      direction
+        ? searchParams.set('directionId', direction.id.toString())
+        : searchParams.delete('directionId');
+      return searchParams;
+    });
+  };
   return (
     <div className='my-4 flex flex-wrap gap-x-8 gap-y-2 border-y border-zinc-100 py-2 md:py-4'>
       {filtersVisible.direction && (
@@ -94,23 +88,23 @@ export const Filters = ({
         <DateRangeFilter label='Дата' dateRange={dateRangeValue} setDateRange={setDateRange} />
       )}
       {filtersVisible.priceRange && (
-        <SelectorFilter
-          value={priceRangeValue}
+        <MultiRangeFilter
+          value={`${priceRangeValue.min} - ${priceRangeValue.max} ₴`}
+          label={'Ціна:'}
           onChange={setPriceRange}
-          label='Ціна'
-          placeholder='Не вказано'
-          items={prices}
-          renderItemValue={(price) => price.label}
+          step={100}
+          min={0}
+          max={5000}
         />
       )}
-      {filtersVisible.tourType && (
-        <SelectorFilter
-          value={tourTypeValue}
-          onChange={setTourType}
-          label='Тип екскурсії'
-          placeholder='Не вказано'
-          items={tourTypes}
-          renderItemValue={(item) => item.label}
+      {filtersVisible.groupSize && (
+        <MultiRangeFilter
+          value={`${groupSizeValue.min} - ${groupSizeValue.max} (чол)`}
+          label={'Розмір групи:'}
+          onChange={setGroupSize}
+          step={1}
+          min={0}
+          max={50}
         />
       )}
     </div>

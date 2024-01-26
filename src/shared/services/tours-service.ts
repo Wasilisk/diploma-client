@@ -8,16 +8,17 @@ import {
   GetToursParams,
   PaginatedResource, UpdateTicketTypesData, UpdateTourData, UpdateTourScheduleData,
 } from 'shared/utils/types';
+import {parseParams} from "shared/utils/libs/parse-params";
 
 export class ToursService {
   static async getAll({
-    directionId,
+    filters,
     paginationParams,
   }: GetToursParams): Promise<AxiosResponse<PaginatedResource<Tour>>> {
     return $api.get(endpoints.tours, {
       params: {
         ...paginationParams,
-        ...(directionId && { filter: `directionId:eq:${directionId}` }),
+        filter: parseParams(filters),
       },
     });
   }

@@ -53,7 +53,7 @@ export const CheckoutModal = () => {
               </Dialog.Title>
               <div className='divide-y divide-gray-200 border-b border-gray-200'>
                 <div className='grid grid-cols-12 gap-4 pb-5'>
-                  <div className='col-span-4 flex items-center gap-x-5'>
+                  <div className='col-span-5 flex items-center gap-x-5'>
                     <img
                       className='h-20 w-20 rounded-2xl'
                       src={tour?.gallery[0]}
@@ -63,7 +63,7 @@ export const CheckoutModal = () => {
                       {tour?.name}
                     </p>
                   </div>
-                  <div className='col-span-4 flex flex-col justify-center'>
+                  <div className='col-span-3 flex flex-col justify-center'>
                     <span className='text-sm font-semibold leading-relaxed text-neutral-800'>
                       Дата і час
                       <br />

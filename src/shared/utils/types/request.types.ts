@@ -8,7 +8,15 @@ import {
 import { daysOfWeek } from 'shared/utils/constants';
 
 export interface GetToursParams {
-  directionId?: number;
+  filters: {
+    directionId: number | null;
+    startDate: string;
+    endDate: string;
+    minPrice: number;
+    maxPrice: number;
+    minGroupSize: number;
+    maxGroupSize: number;
+  };
   paginationParams: PaginationParams;
 }
 
