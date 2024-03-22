@@ -8,6 +8,7 @@ export const endpoints = {
   directions: 'directions',
   tours: 'tours',
   tourSchedule: 'tour-schedule',
+  tourGroup: 'tour-group',
   account: {
     profile: '/account/profile',
     allUsers: '/account/all-users',

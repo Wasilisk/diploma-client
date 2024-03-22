@@ -3,6 +3,7 @@ import {daysOfWeek} from "shared/utils/constants";
 import {z} from "zod";
 import {createTourFormSchema} from "shared/utils/validations/create-tour-form-schema";
 import {Direction} from "shared/utils/types/directions.types";
+import {Order} from "shared/utils/types/orders.types";
 
 
 export type Tour = {
@@ -35,8 +36,9 @@ export type TourSchedule = {
 
 export type TourGroup = {
   id: number;
-  date: Date;
+  date: string;
   time: string;
+  orders: Order[]
 };
 
 export type CreateTourFormValues = z.infer<typeof createTourFormSchema>;

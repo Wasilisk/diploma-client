@@ -4,6 +4,7 @@ import { Tour, TourGroup } from 'shared/utils/types/tours.types';
 import { TicketType } from 'shared/utils/types/ticket';
 import { Direction } from 'shared/utils/types/directions.types';
 import { PaginationParams } from 'shared/utils/types/pagination.types';
+import {FullUserInfo} from 'shared/utils/types/account.types';
 
 export interface GetOrdersParams {
   status?: string;
@@ -32,6 +33,7 @@ export type Order = {
   tour: Tour & { direction: Direction };
   ticketType: TicketType;
   tourGroup: TourGroup;
+  user: FullUserInfo;
 };
 
 export interface BookingOrderInfo {

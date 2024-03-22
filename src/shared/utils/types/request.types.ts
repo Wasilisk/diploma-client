@@ -9,13 +9,14 @@ import { daysOfWeek } from 'shared/utils/constants';
 
 export interface GetToursParams {
   filters: {
-    directionId: number | null;
-    startDate: string;
-    endDate: string;
-    minPrice: number;
-    maxPrice: number;
-    minGroupSize: number;
-    maxGroupSize: number;
+    createdBy?: number;
+    directionId?: number | string;
+    startDate?: string;
+    endDate?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    minGroupSize?: number;
+    maxGroupSize?: number;
   };
   paginationParams: PaginationParams;
 }
@@ -53,6 +54,10 @@ export interface GetAllDirectionsParams {
   sort?: {
     tours: string | null;
   };
+}
+
+export interface GetTourGroupsParams {
+  tourId?: number;
 }
 
 export interface GetAllGuidePermissionRequestsParams {

@@ -93,6 +93,8 @@ export const Filters = ({
           label={'Ціна:'}
           onChange={setPriceRange}
           step={100}
+          minValue={priceRangeValue.min}
+          maxValue={priceRangeValue.max}
           min={0}
           max={5000}
         />
@@ -103,6 +105,8 @@ export const Filters = ({
           label={'Розмір групи:'}
           onChange={setGroupSize}
           step={1}
+          minValue={groupSizeValue.min}
+          maxValue={groupSizeValue.max}
           min={0}
           max={50}
         />

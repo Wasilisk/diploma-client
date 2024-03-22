@@ -4,11 +4,11 @@ import { Direction, FilterRange } from 'shared/utils/types';
 import { addWeeks } from 'date-fns';
 import { NumericRange } from 'shared/ui/multi-range-slider/types';
 import {
-    DEFAULT_MAX_GROUP_SIZE,
-    DEFAULT_MAX_PRICE,
-    DEFAULT_MIN_GROUP_SIZE,
-    DEFAULT_MIN_PRICE
-} from "widgets/filters/constants";
+  DEFAULT_MAX_GROUP_SIZE,
+  DEFAULT_MAX_PRICE,
+  DEFAULT_MIN_GROUP_SIZE,
+  DEFAULT_MIN_PRICE,
+} from 'widgets/filters/constants';
 
 interface FiltersState {
   direction: Direction | null;

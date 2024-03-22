@@ -1,16 +1,15 @@
 import { Popover } from '@headlessui/react';
-import MultiRangeSlider from 'shared/ui/multi-range-slider';
-import { NumericRange } from 'shared/ui/multi-range-slider/types';
+import MultiRangeSlider, { MultiRangeSliderProps } from 'shared/ui/multi-range-slider';
 
-interface MultiRangeFilterProps extends NumericRange {
+interface MultiRangeFilterProps extends MultiRangeSliderProps {
   value: string;
   label: string;
-  onChange: (value: NumericRange) => void;
-  step?: number;
 }
 export const MultiRangeFilter = ({
   min,
   max,
+  minValue,
+  maxValue,
   value,
   label,
   step,
@@ -28,7 +27,14 @@ export const MultiRangeFilter = ({
         </Popover.Button>
 
         <Popover.Panel className='absolute left-0 top-full z-20 mt-2 inline-flex h-8 max-h-56 min-w-full items-center rounded-md bg-white p-2 p-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-          <MultiRangeSlider min={min} max={max} onChange={onChange} step={step} />
+          <MultiRangeSlider
+            min={min}
+            max={max}
+            minValue={minValue}
+            maxValue={maxValue}
+            onChange={onChange}
+            step={step}
+          />
         </Popover.Panel>
       </Popover>
     </div>

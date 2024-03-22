@@ -1,18 +1,27 @@
 import { useCallback, useEffect, useState, useRef, useLayoutEffect } from 'react';
 import './style.css';
-import {NumericRange} from "shared/ui/multi-range-slider/types";
+import { NumericRange } from 'shared/ui/multi-range-slider/types';
 
-interface MultiRangeSliderProps {
+export interface MultiRangeSliderProps {
   min: number;
   max: number;
+  minValue: number;
+  maxValue: number;
   step?: number;
   onChange: (values: NumericRange) => void;
 }
-const MultiRangeSlider = ({ min, max, step = 1, onChange }: MultiRangeSliderProps) => {
-  const [minVal, setMinVal] = useState<number>(min);
-  const [maxVal, setMaxVal] = useState<number>(max);
-  const minValRef = useRef(min);
-  const maxValRef = useRef(max);
+const MultiRangeSlider = ({
+  min,
+  max,
+  step = 1,
+  onChange,
+  maxValue,
+  minValue,
+}: MultiRangeSliderProps) => {
+  const [minVal, setMinVal] = useState<number>(minValue);
+  const [maxVal, setMaxVal] = useState<number>(maxValue);
+  const minValRef = useRef(minValue);
+  const maxValRef = useRef(maxValue);
   const range = useRef<HTMLDivElement>(null);
 
   const getPercent = useCallback(

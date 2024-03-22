@@ -7,6 +7,11 @@ export const profileMenuConfig = [
         role: [Role.USER],
     },
     {
+        label: 'Мої екскурсії',
+        to: '/profile/my-tours',
+        role: [Role.GUIDE, Role.MODERATOR],
+    },
+    {
         label: 'Налаштування профілю',
         to: '/profile/account-settings',
         role: [Role.USER, Role.MODERATOR, Role.GUIDE, Role.ADMIN],

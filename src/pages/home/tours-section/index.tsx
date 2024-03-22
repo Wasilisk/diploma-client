@@ -23,7 +23,7 @@ export const ToursSection = () => {
     refetch,
   } = useTours({
     filters: {
-      directionId: direction ? direction.id : null,
+      directionId: direction ? direction.id : undefined,
       startDate: dateRange.from,
       endDate: dateRange.to,
       minPrice: DEFAULT_MIN_PRICE,

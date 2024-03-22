@@ -56,7 +56,7 @@ export const CheckoutModal = () => {
                   <div className='col-span-5 flex items-center gap-x-5'>
                     <img
                       className='h-20 w-20 rounded-2xl'
-                      src={tour?.gallery[0]}
+                      src={tour?.gallery?.[0]}
                       alt='Tour image'
                     />
                     <p className='max-w-xs font-normal leading-relaxed text-neutral-800'>

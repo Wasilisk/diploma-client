@@ -1,26 +1,27 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Layout } from 'widgets/layout';
-import { Login } from 'pages/login';
-import { Registration } from 'pages/registration';
-import { PasswordReset } from 'pages/password-reset';
-import { RequestPasswordReset } from 'pages/request-password-reset';
-import { Support } from 'pages/support';
-import { ProfileSettings } from 'pages/profile-settings';
-import { Orders } from 'pages/orders';
-import { About } from 'pages/about';
-import { Home } from 'pages/home';
-import { useAuth } from 'shared/utils/hooks/use-auth';
-import { ProtectedRoute } from 'shared/ui/protected-route';
-import { ProfileLayout } from 'widgets/profile-layout';
-import { Tours } from 'pages/tours';
-import { Tour } from 'pages/tour';
-import { SuccessPayment } from 'pages/success-payment';
-import { UserManagement } from 'pages/user-management';
-import { Role } from 'shared/utils/types';
-import { TechnicalSupport } from 'pages/technical-support';
-import { BecomeGuide } from 'pages/become-guide';
-import { GuidePermissionRequests } from 'pages/guide-permission-requests';
-import {Directions} from "pages/directions";
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import {Layout} from 'widgets/layout';
+import {Login} from 'pages/login';
+import {Registration} from 'pages/registration';
+import {PasswordReset} from 'pages/password-reset';
+import {RequestPasswordReset} from 'pages/request-password-reset';
+import {Support} from 'pages/support';
+import {ProfileSettings} from 'pages/profile-settings';
+import {Orders} from 'pages/orders';
+import {About} from 'pages/about';
+import {Home} from 'pages/home';
+import {useAuth} from 'shared/utils/hooks/use-auth';
+import {ProtectedRoute} from 'shared/ui/protected-route';
+import {ProfileLayout} from 'widgets/profile-layout';
+import {Tours} from 'pages/tours';
+import {Tour} from 'pages/tour';
+import {SuccessPayment} from 'pages/success-payment';
+import {UserManagement} from 'pages/user-management';
+import {Role} from 'shared/utils/types';
+import {TechnicalSupport} from 'pages/technical-support';
+import {BecomeGuide} from 'pages/become-guide';
+import {GuidePermissionRequests} from 'pages/guide-permission-requests';
+import {Directions} from 'pages/directions';
+import {MyTours} from 'pages/my-tours';
 
 export const AppRouter = () => {
   const { isAuth } = useAuth();
@@ -56,6 +57,14 @@ export const AppRouter = () => {
                 element={
                   <ProtectedRoute requiredRoles={[Role.MODERATOR, Role.ADMIN]}>
                     <GuidePermissionRequests />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/profile/my-tours'
+                element={
+                  <ProtectedRoute requiredRoles={[Role.GUIDE, Role.MODERATOR, Role.ADMIN]}>
+                    <MyTours />
                   </ProtectedRoute>
                 }
               />

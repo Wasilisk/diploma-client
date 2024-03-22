@@ -1,14 +1,19 @@
 import { $api } from 'shared/configs/axios-config';
 import { AxiosResponse } from 'axios';
 import { endpoints } from 'shared/utils/constants';
-import { Tour } from 'shared/utils/types/tours.types';
+import {Tour, TourGroup} from 'shared/utils/types/tours.types';
 import {
-  AddTicketTypesData, AddTourData,
+  AddTicketTypesData,
+  AddTourData,
   AddTourScheduleData,
+  GetTourGroupsParams,
   GetToursParams,
-  PaginatedResource, UpdateTicketTypesData, UpdateTourData, UpdateTourScheduleData,
+  PaginatedResource,
+  UpdateTicketTypesData,
+  UpdateTourData,
+  UpdateTourScheduleData,
 } from 'shared/utils/types';
-import {parseParams} from "shared/utils/libs/parse-params";
+import { parseParams } from 'shared/utils/libs/parse-params';
 
 export class ToursService {
   static async getAll({
@@ -27,7 +32,9 @@ export class ToursService {
     return $api.get(`${endpoints.tours}/${tourId}`);
   }
 
-  static async create(data: AddTourData): Promise<AxiosResponse<Omit<Tour, 'schedule' | 'ticketTypes'>>> {
+  static async create(
+    data: AddTourData,
+  ): Promise<AxiosResponse<Omit<Tour, 'schedule' | 'ticketTypes'>>> {
     return $api.post(endpoints.tours, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -35,7 +42,9 @@ export class ToursService {
     });
   }
 
-  static async update(data: UpdateTourData): Promise<AxiosResponse<Omit<Tour, 'schedule' | 'ticketTypes'>>> {
+  static async update(
+    data: UpdateTourData,
+  ): Promise<AxiosResponse<Omit<Tour, 'schedule' | 'ticketTypes'>>> {
     return $api.patch(endpoints.tours, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -61,5 +70,9 @@ export class ToursService {
 
   static async delete(tourId: number) {
     return $api.delete(`${endpoints.tours}/${tourId}`);
+  }
+
+  static async getTourGroups(params: GetTourGroupsParams): Promise<AxiosResponse<TourGroup[]>> {
+    return $api.get(`${endpoints.tourGroup}/${params.tourId}`);
   }
 }

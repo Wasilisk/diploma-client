@@ -8,11 +8,12 @@ import { Pagination } from 'features/pagination';
 import { useGuidePermissionRequests } from 'shared/utils/hooks/use-guide-permission-requests';
 import { GuidePermissionRequestListItem } from 'entities/guide-permission-requests/ui/guide-permission-requests-list-item';
 import { RequestsFilters } from 'features/guide-permission-request/requests-filters';
-import {useRequestsFilters} from "features/guide-permission-request/requests-filters/use-requests-filters";
+import { useRequestsFilters } from 'features/guide-permission-request/requests-filters/use-requests-filters';
 
 export const GuidePermissionRequests = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { status, sorting } = useRequestsFilters();
+
   const {
     data: guidePermissionRequests,
     isError,

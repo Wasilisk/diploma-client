@@ -44,7 +44,7 @@ export const Tours = () => {
     refetch,
   } = useTours({
     filters: {
-      directionId: directionIdSearchParam ? Number(directionIdSearchParam) : null,
+      directionId: directionIdSearchParam ? Number(directionIdSearchParam) : undefined,
       startDate: selectedDate ? selectedDate : dateRange.from,
       endDate: dateRange.to,
       minPrice: priceRange.min,

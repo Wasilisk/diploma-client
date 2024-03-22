@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from 'react-query';
 import { endpoints } from 'shared/utils/constants';
 import { DirectionsService } from 'shared/services/directions-service';
-import { useDebounce } from '@uidotdev/usehooks';
+import {useDebounce} from "shared/utils/hooks/use-debounce";
 
 interface useInfiniteDirectionScrollParams {
   filter?: {
@@ -11,13 +11,13 @@ interface useInfiniteDirectionScrollParams {
 export const useInfiniteDirectionScroll = (
   { filter }: useInfiniteDirectionScrollParams = { filter: { name: null } },
 ) => {
-  const searchParam = useDebounce({ ...filter! }, 500);
+  const searchParam = useDebounce(filter, 500);
   return useInfiniteQuery(
     [endpoints.directions, 'infinite-query', searchParam],
     async ({ pageParam = 0 }) => {
       const response = await DirectionsService.getAll({
         paginationParams: { page: pageParam, size: 10 },
-        filter: searchParam,
+        filter: filter,
       });
       return response.data;
     },
